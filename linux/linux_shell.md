@@ -75,6 +75,8 @@ grant select on 数据库.* to 用户名@登录主机 identified by "密码"
 如增加一个用户test密码为123，让他可以在任何主机上登录， 并对所有数据库有查询、插入、修改、删除的权限。首先用以root用户连入mysql，然后键入以下命令：
 grant select,insert,update,delete on *.* to " Identified by "123";
 
+* [Tomcat](#1)
+* [查看项目日志](#1.1)
 # Tomcat
 ## 查看项目日志
 tail -f /usr/local/src/apache-tomcat-8.5.15/logs/catalina.out

@@ -10,3 +10,6 @@ C:\Users\MY-PC\.gitconfig 文件中的设置证书存储
 	helper=store
 ### 输入登录信息
 下次再输入用户名和密码会被git记住，从而在C:\Users\MY-PC目录下形成一个明文储存用户名和密码的.git-credentials文件
+
+C:\Users\MY-PC\.git-credentials
+https://admin:password@github.com

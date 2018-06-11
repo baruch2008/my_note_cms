@@ -5,4 +5,12 @@ app
   web
     view
       webrestful.py
-        bp = Blueprint('report', __name__, url_prefix='/web/task', template_folder='templates', static_folder='static')
+        bp = Blueprint('report', __name__, url_prefix='/test', template_folder='templates', static_folder='static')
+        @bp.route("/hello", methods=["GET"])
+        def hello():
+          param = resquest.arg.get('param')
+          return jsonify(msg='hello_get')
+        @bp.route("/hello", methods=["POST"])
+        def hellopost():
+          data = resquest.get_json()
+          return jsonify(msg='hello_post')

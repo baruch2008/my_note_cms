@@ -43,6 +43,7 @@ https://blog.csdn.net/wodewutai17quiet/article/details/53104034
     <groupId>io.springfox</groupId>
     <artifactId>springfox-swagger-ui</artifactId>
 </dependency>
+
 ### restful注解的使用
 @ApiOperation(value notes) --接口本身的说明notes起说明作用
 @ApiResponses({@ApiResponse(code message response)}) --响应体的简单说明message起说明作用

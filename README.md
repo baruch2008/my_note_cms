@@ -52,7 +52,9 @@ https://blog.csdn.net/wodewutai17quiet/article/details/53104034
 
 ## Mybatis 标签使用
 ### '<choose><when><otherwise>'
-等价于java中的
-    if(){}
-    else if(){}
-    else{}
+等价于sql语句中的
+    1. if(exp1,true_result,false_result)
+    2. case when exp1 then true_result
+        else 1=1 end
+    
+    

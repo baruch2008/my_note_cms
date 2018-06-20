@@ -49,3 +49,10 @@ https://blog.csdn.net/wodewutai17quiet/article/details/53104034
 @ApiOperation(value notes) --接口本身的说明notes起说明作用
 @ApiResponses({@ApiResponse(code message response)}) --响应体的简单说明message起说明作用
 @ApiImplicitParams({@ApiImplicitParam(name value)}) --请求体与请求参数的简单说明name对应@RequestParam中的value，value起说明作用
+
+## Mybatis 标签使用
+### <choose><when><otherwise>
+等价于java中的
+    if(){}
+    else if(){}
+    else{}

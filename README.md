@@ -58,3 +58,54 @@ https://blog.csdn.net/wodewutai17quiet/article/details/53104034
         else 1=1 end
     
     
+public ResponseResult<String> importKPIExcelTable(
+            @RequestParam(value = "targetFile", required = false) MultipartFile targetFile) throws Exception
+    {
+    }
+     String excelToHtml = null;
+        // excel转换为html
+        Workbook wb = WorkbookFactory.create(targetFile.getInputStream());
+        if (wb instanceof XSSFWorkbook)
+        {
+            XSSFWorkbook xWb = (XSSFWorkbook) wb;
+            excelToHtml = xlsxToHtml(xWb);
+        }
+        else if (wb instanceof HSSFWorkbook)
+        {
+            HSSFWorkbook hWb = (HSSFWorkbook) wb;
+            excelToHtml = PoiUtil.excelToHtml(hWb);
+        }
+    public static String excelToHtml(HSSFWorkbook excelBook) throws Exception
+    {
+
+        ExcelToHtmlConverter ethc = new ExcelToHtmlConverter(DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());
+        ethc.setOutputColumnHeaders(false);
+        ethc.setOutputRowNumbers(false);
+
+        ethc.processWorkbook(excelBook);
+
+        Document htmlDocument = ethc.getDocument();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        DOMSource domSource = new DOMSource(htmlDocument);
+        StreamResult streamResult = new StreamResult(out);
+
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer serializer = tf.newTransformer();
+        serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+        serializer.setOutputProperty(OutputKeys.METHOD, "html");
+        serializer.transform(domSource, streamResult);
+        out.close();
+
+        String htmlStr = new String(out.toByteArray());
+
+        // htmlStr = htmlStr.replace("<h2>Sheet1</h2>", "")
+        // .replace("<h2>Sheet2</h2>", "")
+        // .replace("<h2>Sheet3</h2>", "")
+        // .replace("<h2>Sheet4</h2>", "")
+        // .replace("<h2>Sheet5</h2>", "");
+        htmlStr = htmlStr.replace("<h2>Sheet1</h2>", "");
+        return htmlStr;
+    }
+    java xlsx转html
+   http://bewithme.iteye.com/blog/2418535

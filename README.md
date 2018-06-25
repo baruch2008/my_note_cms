@@ -111,3 +111,6 @@ public ResponseResult<String> importKPIExcelTable(
    http://bewithme.iteye.com/blog/2418535
    支持07 03excel转html可用demo
    https://www.cnblogs.com/linshangxixia/p/4442665.html
+   获取<style> <table>标签
+ String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>";
+        String regEx_table = "<[\\s]*?table[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?table[\\s]*?>";

@@ -1,5 +1,110 @@
-备份mongo数据库
+# 备份mongo数据库
 C:\users\xwx537076>
 mongodump -h 100.99.50.126:27017 -d fst_tool -o D:\MongoDB\Server\3.6\data\dump
 mongodump -h 127.0.0.1:27017 -d testdb -o D:\MongoDB\bak
 mongodump -h 100.112.33.199:27017 -d fst_tool -o C:\Users\xwx537076\Desktop\fst备份
+
+# 备份数据库中的集合
+C:\users\xwx537076>
+mongoexport -h 100.99.50.126:27017 -d fst_tool -c pbi -o D:\1_resource\项目4_fst\db_bak\pbi.json  
+mongoexport -h 100.112.33.199:27017 -d fst_tool -c pbi -o C:\Users\xwx537076\Desktop\fst_tool1\pbi.json
+
+# 导入mongo数据库/集合
+C:\users\xwx537076>
+mongorestore -h 100.99.50.126:27017 -d fst_test C:\Users\xwx537076\Desktop\fst备份\fst_tool
+mongorestore -h 100.112.33.199:27017 -d fst_tool D:\MongoDB\Server\3.6\data\dump\fst_tool
+mongoimport --drop -h 100.112.33.199:27017 -d fst_tool -c pbi --file D:\1_resource\项目4_fst\db_bak\pbi.json
+mongoimport --drop -d mytest -c user --file F:\bk\user.json 
+mongoimport --drop -h 100.112.33.199:27017 -d fst_tool -c pbi --file C:\Users\xwx537076\Desktop\fst_tool1\pbi.json
+
+# 嵌套查询并且只显示dts单号
+db.getCollection('dts').find({ "info.sprodcno" : "OceanStor OS V500R001C20"},{"_id" : 1})
+
+# 模糊查询
+db.pbi.find({"cn" : /OceanStor/})
+db.getCollection('field').find({"label" : {$regex:/发现/}})
+
+# 插入单条
+db.getCollection('super_user').insert({"name":"xwx537076"})
+# 插入多条数据
+db.getCollection('collection').insert([{},{},...])
+# 删除文档
+db.getCollection('improvement').remove({"creator" : "xwx537076"})
+# 清空表
+db.getCollection('projectid_pbi_copy').remove({})
+# 修改表内容
+db.getCollection('field_options').update({"_id" : ObjectId("5b1752fa3a8175000af9b4d2")},{$set:{"value" : "需求review"}})
+# 表添加/删除字段
+db.Collection.update(
+    // query 
+    {},    
+    // update 
+    {
+//         $set:{num:""}
+        $unset:{num:""}
+    },
+    // options 
+    {
+        "multi" : true,  // update only one document 
+//         "upsert" : false  // insert a new document, if no existing document match the query 
+    }
+);
+
+# IN查询+or查询
+db.getCollection('dts').find({
+	"info.department": "统一存储产品软件开发部",
+	"info.sprodcno": {
+		$in: ["OceanStor OS V500R001C20", "OceanStor OS V500R001C99"]
+	},
+	$or: [{
+			"info.ssecnonow": "关闭"
+		}, {
+			"info.ssecnonow": "撤销"
+		}
+	]
+}).count()
+
+java实现
+public void testIn(){
+		DBObject queryCondition = new BasicDBObject();		
+		//age in [13, 47]
+		queryCondition = new BasicDBObject();
+		BasicDBList values = new BasicDBList();
+		values.add(13);
+		values.add(47);
+		queryCondition.put("age", new BasicDBObject("$in", values));
+		
+		DBCursor dbCursor = coll.find(queryCondition);
+		assertEquals(2, dbCursor.size());
+		assertEquals("tom", dbCursor.next().get("username"));
+	}
+	
+# 分组聚合+排序+结果分页
+db.getCollection('improvement').aggregate([{
+			$group: {
+				_id: "$creator",
+				num_tutorial: {
+					$sum: 1
+				}
+			}
+		}, {
+			$sort: {
+				"num_tutorial": -1
+			}
+		}, {
+			$skip: 0
+		}, {
+			$limit: 10
+		}
+	])
+
+# 特殊查询——时间对象
+db.getCollection('improvement').find({
+	"ticket_id": {
+		$in: ["DTS2017041707020"]
+	},
+	"last_modify_date": {
+		"$lte": ISODate("2018-07-15T00:00:00.007Z")
+	},
+	"status": "Finished"
+})

@@ -1,0 +1,5 @@
+备份mongo数据库
+C:\users\xwx537076>
+mongodump -h 100.99.50.126:27017 -d fst_tool -o D:\MongoDB\Server\3.6\data\dump
+mongodump -h 127.0.0.1:27017 -d testdb -o D:\MongoDB\bak
+mongodump -h 100.112.33.199:27017 -d fst_tool -o C:\Users\xwx537076\Desktop\fst备份

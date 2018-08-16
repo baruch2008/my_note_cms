@@ -1,0 +1,8 @@
+### 重新安装mysql的数据源（解决mysql的ibdata1文件过大）
+#### 修改mysql的数据源路径
+vim /etc/mysql/my.cnf
+my.cnf
+  [mysqld]
+    port            = 3306
+    basedir         = /usr
+    datadir         = /mnt/lib/mysql  // 设置的新路径，默认路径是var/lib/mysql

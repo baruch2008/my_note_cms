@@ -1,8 +1,15 @@
 ### 重新安装mysql的数据源（解决mysql的ibdata1文件过大）
 #### 修改mysql的数据源路径
-vim /etc/mysql/my.cnf
-my.cnf
-  [mysqld]
-    port            = 3306
-    basedir         = /usr
-    datadir         = /mnt/lib/mysql  // 设置的新路径，默认路径是var/lib/mysql
+  vim /etc/mysql/my.cnf
+  my.cnf
+    [mysqld]
+      port            = 3306
+      basedir         = /usr
+      datadir         = /mnt/lib/mysql  // 设置的新路径，默认路径是var/lib/mysql
+  chown -R mysql:mysql /mnt/lib/mysql // 给/mnt/lib/mysql赋权限
+#### 修改mysql服务的数据源路径访问权限
+  ubuntu-apparmor服务进行设置
+  vi /etc/apparmor.d/usr.sbin.mysqld
+    /mnt/lib/mysql/ r,          // 设置新目录的可读权限
+    /mnt/lib/mysql/** rwk,     // 设置新目录的读写权限
+  /etc/init.d/apparmor restart // 重启apparmor服务

@@ -1,0 +1,3 @@
+# 多项目动态设置日志文件
+http://www.blogjava.net/stone2083/archive/2010/07/01/324935.html
+java -DlogPath=logPath -DlogFileName=logFileName -jar /service.jar --spring.profiles.active=pro

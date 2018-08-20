@@ -96,3 +96,5 @@ split命令专门用来将一个大文件分割成很多个小文件，我把spl
 
 #后缀是数字，占两位，前缀是test.log
 split -l 1000000 test.log -d -a 2 test.log
+# 按照指定配置运行jar包
+java -Xms4G -Xmx8G -jar /usr/local/allinone-testcase-collect-service-0.1-SNAPSHOT.jar --spring.profiles.active=pro > /usr/local/allinone/testcasecollect/log/allinone-testcase-collect-service.log

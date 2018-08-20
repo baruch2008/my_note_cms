@@ -84,3 +84,15 @@ tail -f /usr/local/src/apache-tomcat-8.5.15/logs/catalina.out
 cd /usr/local/src/apache-tomcat-8.5.15/bin/
 ./shutdown.sh
 ./startup.sh
+
+split命令专门用来将一个大文件分割成很多个小文件，我把split命令的选项做一个简要说明
+
+选项	含义
+-b	分割后的文档大小，单位是byte
+-C	分割后的文档，单行最大byte数
+-d	使用数字作为后缀，同时使用-a length指定后缀长度
+-l	分割后文档的行数
+为了尽量保证日志的可读性，我们按行分割大日志文件，并且指定分割后的文件的前缀和后缀
+
+#后缀是数字，占两位，前缀是test.log
+split -l 1000000 test.log -d -a 2 test.log

@@ -1,0 +1,8 @@
+#### 查看所有队列
+rabbitmqctl list_queues
+#### 清除所有消息
+rabbitmqctl reset
+#### 清除所有消息要先关闭应用
+rabbitmqctl stop_app
+#### 执行了这两条命令后再次启动此应用
+rabbitmqctl start_app

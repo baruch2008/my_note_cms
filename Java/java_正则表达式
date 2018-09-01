@@ -1,0 +1,3 @@
+取html中的<style>标签中的内容并保留标签
+String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>";
+String regEx_table = "<[\\s]*?table[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?table[\\s]*?>";

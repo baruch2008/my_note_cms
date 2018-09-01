@@ -1,2 +1,10 @@
-# JAVA List的倒序
+# 倒序
 Collections.reverse()
+# 判断列表中是否包含指定元素
+list.contains()
+# 并集
+list1.addAll(list2);
+# 交集
+list1.retainAll(list2);
+# 差集
+list1.removeAll(list2);

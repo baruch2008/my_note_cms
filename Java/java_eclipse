@@ -1,0 +1,2 @@
+eclipse的console窗口拖出来了，成为了一个单独的窗口，怎么才能拖进eclipse里去呢？
+方法:视图重置,在eclipse主窗口最上面的工具条选项中，找到Window>perspective点击里面的Reset Perspective，视图就重置了

@@ -1,0 +1,4 @@
+FeignClient中不加url属性，默认调用同一个注册中心的服务
+
+@FeignClient Method has too many Body parameters
+异常原因：当使用FeignClient调用三方接口时，如果发送的是get请求，那么需要在请求参数前加上@RequestParam注解修饰，Controller里面可以不加该注解修饰。

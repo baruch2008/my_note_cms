@@ -4,3 +4,12 @@
   对常用条件创建索引
   减少执行sql语句的次数
   将关联查询操作移动到java代码中执行，当数据量大的时候减少在sql中执行IN 或 JOIN的操作
+
+### 两表之间求差集（not in效率低，但绝对有效）
+SELECT t1.* FROM t1 
+WHERE name NOT IN
+(SELECT name FROM t2)
+
+SELECT t1.id, t1.name, t1.age
+FROM t1 LEFT JOIN t2 ON t1.id = t2.id
+WHERE t1.name != t2.name

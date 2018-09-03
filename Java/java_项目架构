@@ -17,3 +17,5 @@ user-service // 用户鉴权服务
 collect-service // 数据采集服务
 count-service // 数据统计服务
 api-service // 接口服务
+
+代码管理 maven 3.2.5

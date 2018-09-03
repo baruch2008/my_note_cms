@@ -1,19 +1,19 @@
 
-公共配置
-bootstrap-config
+# 公共配置
+bootstrap-config // springboot启动配置：指向配置服务
 logger-config
 common
 
-基础服务
-config-service
-eureka-service
-gateway-service
+# 基础服务
+config-service // 配置服务：管理所有服务的配置，属于除eureka服务以外所有子服务的根服务
+eureka-service // 注册中心服务
+gateway-service // 网关服务：解决跨域问题，统一管理接口url，鉴权
 
-公共业务服务
+# 公共业务服务
 cache-manage-service
 user-service
 
-业务服务
+# 业务服务
 collect-service
 count-service
 api-service

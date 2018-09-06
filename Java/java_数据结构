@@ -12,7 +12,7 @@ list1.removeAll(list2);
 # 将一个list均分成n个list(主要通过偏移量来实现)
 public static <T> List<List<T>> averageAssign(List<T> source, int n) {
     List<List<T>> result = new ArrayList<List<T>>();
-    int remaider = source.size() % n;  // 取余
+    int remaider = source.size() % n;  // 取余，最后一个list的长度
     int number = source.size() / n;  // 每组的长度
     int offset = 0;//偏移量
     for (int i = 0; i < n; i++) {

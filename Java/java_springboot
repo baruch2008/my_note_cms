@@ -5,3 +5,8 @@ FeignClient中不加url属性，默认调用同一个注册中心的服务
 
 ### 接收cookie中的参数
 @CookieValue(value="xx")
+
+### 扫描包注解
+@ComponentScan(basePackages = { "com.huawei.allinone.testmanagement", "com.huawei.tdt.common.config",
+        "com.huawei.allinone.common
+"})

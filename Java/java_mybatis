@@ -1,9 +1,22 @@
-mapper文件报错：不允许有匹配 "[xX][mM][lL]" 的处理指令目标
+### mapper文件报错：不允许有匹配 "[xX][mM][lL]" 的处理指令目标
 一个mapper中出现多个头信息导致，一般是mapper.xml解决冲突的时候留下的
 
-mybatis中的#{}和${}区别
+### #{}和${}区别
 1. #将传入的数据都当成一个字符串，会对自动传入的数据加一个双引号。如：order by #user_id#，如果传入的值是111,那么解析成sql时的值为order by "111", 如果传入的值是id，则解析成的sql为order by "id".
 2. $将传入的数据直接显示生成在sql中。如：order by $user_id$，如果传入的值是111,那么解析成sql时的值为order by user_id,  如果传入的值是id，则解析成的sql为order by id.
 5.$方式一般用于传入数据库对象，例如传入表名.
 
-<foreach>标签的index 就是 当前 List 集合遍历次数的 计数器，可以用于在插入数据时的自增值的定义
+### <foreach>标签
+index属性：当前集合遍历次数的计数器，可以用于在插入数据时的自增值的定义
+
+### mybatis大于小于符号写法
+#### 第一种写法（1）：
+  原符号       <        <=      >       >=       &        '        "
+  替换符号    &lt;    &lt;=   &gt;    &gt;=   &amp;   &apos;  &quot;
+  例如：sql如下：
+  create_date_time &gt;= #{startTime} and  create_date_time &lt;= #{endTime}
+#### 第二种写法（2）：
+  大于等于
+  <![CDATA[ >= ]]>
+  小于等于
+  <![CDATA[ <= ]]>

@@ -1,7 +1,7 @@
 ### <select>标签自动将多条数据映射为list
   List<UserSsq> findAfterBuy(Integer param)
   <select id="findAfterBuy" parameterType="java.lang.Integer" resultType="UserSsq">
-  注：不要误写成resultType=java.util.List
+  注：不要误写成resultType=java.util.List 报错 Error querying database.  Cause: java.lang.UnsupportedOperationException
 
 
 ### mapper文件报错：不允许有匹配 "[xX][mM][lL]" 的处理指令目标

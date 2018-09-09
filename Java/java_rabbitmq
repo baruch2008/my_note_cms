@@ -9,3 +9,7 @@ rabbitmqctl start_app
 
 #### 消息发送流程
 TaskMsgSender-->TaskMsgReceiver-->All TaskHandler
+
+Handler
+  |--process 执行具体任务
+  |--getFocusMessageType 设置其关注的消息类型

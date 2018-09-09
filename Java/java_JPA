@@ -1,0 +1,4 @@
+JPA接口类报错 spring boot No Identifier specified for entity
+原因：实体中主键字段未加JPA的主键注解
+	@Id
+  @GeneratedValue(strategy= GenerationType.AUTO)

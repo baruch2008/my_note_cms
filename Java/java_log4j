@@ -58,3 +58,10 @@ java -DlogPath=logPath -DlogFileName=logFileName -jar /service.jar --spring.prof
     </root>
 
 </log4j:configuration>
+
+catch exception时要打印堆栈，不要忽视日志的作用，在定位现网问题时日志是救命的，下面是对日志制定一些规范。
+1.使用org.slf4j包下的logger，可以以参数的形式进行打印，不用拼装字符串。例如logger.info("insert {}/{} failed",param1,param2);
+2.一次操作会多次经过的位置使用debug，只会经过一次的关键逻辑调用打印info级别日志
+3.服务启动或者停止的流程使用warn级别
+4.程序出现不可预期的结果时使用warn级别
+5.出现Exception时使用error级别日志，并且要打印堆栈不能只打印message

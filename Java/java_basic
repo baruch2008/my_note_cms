@@ -9,3 +9,6 @@ String d2 = String.format("%.4f", d1);
 
 解决xstream fromXML方法解析xml中含有下划线的字段
 private static XStream xs = new XStream(new DomDriver(null,new XmlFriendlyNameCoder("_-", "_")));
+
+数组转换成为List。
+List<String> stooges = Arrays.asList(String[]);

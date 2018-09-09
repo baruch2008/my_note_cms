@@ -1,5 +1,2 @@
-### 接收cookie中的参数
-@CookieValue(value="xx")
-
 mapper文件报错：不允许有匹配 "[xX][mM][lL]" 的处理指令目标
 一个mapper中出现多个头信息导致，一般是mapper.xml解决冲突的时候留下的

@@ -13,3 +13,15 @@ WHERE name NOT IN
 SELECT t1.id, t1.name, t1.age
 FROM t1 LEFT JOIN t2 ON t1.id = t2.id
 WHERE t1.name != t2.name
+
+### 未解之谜
+2018-08-10 14:15:31,447 ERROR [com.huawei.allinone.web.controller.ExceptionHandlerAdvice] - ---DefaultException Handler---Host 172.17.75.1 invokes url http://100.99.64.130:9000/v1/requirement/projectTotalWork ERROR: {}
+org.springframework.transaction.CannotCreateTransactionException: Could not open JPA EntityManager for transaction; nested exception is javax.persistence.PersistenceException: com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: No operations allowed after connection closed.
+        
+Caused by: javax.persistence.PersistenceException: com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: No operations allowed after connection closed.
+        
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLNonTransientConnectionException: No operations allowed after connection closed.
+        
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: The last packet successfully received from the server was 41,467,736 milliseconds ago.  The last packet sent successfully to the server was 41,467,736 milliseconds ago. is longer than the server configured value of 'wait_timeout'. You should consider either expiring and/or testing connection validity before use in your application, increasing the server configured values for client timeouts, or using the Connector/J connection property 'autoReconnect=true' to avoid this problem.
+        
+Caused by: java.net.SocketException: Broken pipe

@@ -14,10 +14,9 @@ SELECT t1.id, t1.name, t1.age
 FROM t1 LEFT JOIN t2 ON t1.id = t2.id
 WHERE t1.name != t2.name
 
-### error 联合查询表之间排序规则不同 Illegal mix of collations for operation 'UNION'
-字段的排序规则不同报错
-utf8_general_ci 
-utf8_unicode_ci 
+## error 
+### 联合查询表之间排序规则不同 Illegal mix of collations for operation 'UNION'
+varchar等文本类型的字段使用了不同的排序规则，比如utf8_general_ci 与 utf8_unicode_ci 混用
 
 ### 未解之谜
 2018-08-10 14:15:31,447 ERROR [com.huawei.allinone.web.controller.ExceptionHandlerAdvice] - ---DefaultException Handler---Host 172.17.75.1 invokes url http://100.99.64.130:9000/v1/requirement/projectTotalWork ERROR: {}

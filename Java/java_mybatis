@@ -25,6 +25,8 @@ when标签不支持别名，判断与字符串是否相等要用“==”——�
   <![CDATA[ <= ]]>
   
 ### 按条件过滤查询解决方案（支持页面传入正则表达式、单/复选框、时间段）
+前台获取可过滤字段table_header_field
+按用户保存过滤信息filter_condition_group
 <foreach collection="param3" item="filterCondition">
     <if test="filterCondition.type == 'Text'">
         and ${filterCondition.fieldName} REGEXP

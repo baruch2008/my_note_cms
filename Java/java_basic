@@ -19,4 +19,9 @@ String d2 = String.format("%.4f", d1);
   也可以把String转成URL，再能过URL生成URI的方法来解决问题。
   解决方法（url1.getPath()）
   URL url1 = new URL(url); 
-  URI uri = new URI(url1.getProtocol(), url1.getAuthority(), url1.getPath(), url1.getQuery(), null); 
+  URI uri = new URI(url1.getProtocol(), url1.getAuthority(), url1.getPath(), url1.getQuery(), null);
+
+HashMap的value部分转换为set
+  错误写法：Set<String> groupNames = (Set<String>) arg.values();
+  java.lang.ClassCastException: java.util.HashMap$Values cannot be cast to java.util.Set
+  正确写法：Set<String> groupNames = new TreeSet<>(arg.values());

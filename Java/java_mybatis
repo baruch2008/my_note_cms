@@ -1,3 +1,9 @@
+### <select>标签自动将多条数据映射为list
+  List<UserSsq> findAfterBuy(Integer param)
+  <select id="findAfterBuy" parameterType="java.lang.Integer" resultType="UserSsq">
+  注：不要误写成resultType=java.util.List
+
+
 ### mapper文件报错：不允许有匹配 "[xX][mM][lL]" 的处理指令目标
 一个mapper中出现多个头信息导致，一般是mapper.xml解决冲突的时候留下的
 

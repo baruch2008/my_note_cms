@@ -3,6 +3,18 @@
   <select id="findAfterBuy" parameterType="java.lang.Integer" resultType="UserSsq">
   注：不要误写成resultType=java.util.List 报错 Error querying database.  Cause: java.lang.UnsupportedOperationException
 
+错误写法：Integer getCaseExeResultNumByItemUris(List<String> itemUris, String lastResult);
+Integer getCaseExeResultNumByItemUris(@Param("list") List<String> itemUris, String lastResult);org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.binding.BindingException: Parameter 'list' not found. Available parameters are [arg1, arg0, param1, param2]
+	<foreach collection="list" item="itemUri" index="index" open="(" close=")" separator=",">
+		#{itemUri}
+	</foreach>
+正确写法：Integer getCaseExeResultNumByItemUris(@Param("list") List<String> itemUris, String lastResult);
+
+错误写法：<select="xx" >
+报错A query was run and no Result Maps were found for the Mapped Statement 'com.xx.xx.xxMapper.getxx'.  
+It's likely that neither a Result Type nor a Result Map was specified.
+正确写法：<select="xx" resultType="Integer">
+
 
 ### mapper文件报错：不允许有匹配 "[xX][mM][lL]" 的处理指令目标
 一个mapper中出现多个头信息导致，一般是mapper.xml解决冲突的时候留下的

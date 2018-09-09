@@ -1,0 +1,11 @@
+Spring RestTemplate: 比httpClient更优雅的Restful URL访问
+
+java对象转换为json字符串
+JSONArray.fromObject(Object).toString()
+
+//保留4位小数
+double d1 = 123.0123456;
+String d2 = String.format("%.4f", d1);
+
+解决xstream fromXML方法解析xml中含有下划线的字段
+private static XStream xs = new XStream(new DomDriver(null,new XmlFriendlyNameCoder("_-", "_")));

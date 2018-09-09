@@ -6,3 +6,6 @@ rabbitmqctl reset
 rabbitmqctl stop_app
 #### 执行了这两条命令后再次启动此应用
 rabbitmqctl start_app
+
+#### 消息发送流程
+TaskMsgSender-->TaskMsgReceiver-->All TaskHandler

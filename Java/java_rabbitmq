@@ -1,3 +1,9 @@
+#### 解决windows环境启动rabbitmq服务器报错 unable to perform an operation on node 'rabbit@DESKTOP-ECFDCQB'. Please see diagnostics information and suggestions below.
+##### 将C:\Users\tracyclock\.erlang.cookie 文件拷贝到C:\Windows\System32\config\systemprofile替换掉.erlang.cookie文件
+##### 重启mq服务
+  cmd services.msc
+  找到服务中的RabbitMQ重启动
+
 #### 查看所有队列
 rabbitmqctl list_queues
 #### 清除所有消息

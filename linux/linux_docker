@@ -1,1 +1,15 @@
 ### 安装与修改docker配置
+
+### docker容器自动停止
+  详情 
+  [com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver.getClusterEndpoints
+  (ConfigClusterResolver.java:43)-(AsyncResolver-bootstrap-executor-0)] 
+  Resolving eureka endpoints via configuration
+  Killed
+  原因
+  内核检测到没有足够的内存可以分配，就会扔出 OOME(Out Of Memmory Exception)，并开始杀死一些进程用于释放内存空间大量的容器把主机的内存消耗殆尽，
+  docker 尝试通过调整 docker daemon 的 OOM 优先级来进行缓解。内核在选择要杀死的docker容器时会按其对进程打分，直接杀死得分最高的进程，接着是下一个。
+  docker核心进程docker daemon 的 OOM 优先级非常低。
+  解决办法
+  增加机器的可用内存
+  

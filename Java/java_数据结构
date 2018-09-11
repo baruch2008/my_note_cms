@@ -28,3 +28,18 @@ public static <T> List<List<T>> averageAssign(List<T> source, int n) {
     }
     return result;
 }
+
+# list remove的坑
+List<String> moduleNames = Arrays.asList(ModuleDefiniens.S_SERVICE_OF_SUMMARY,
+                ModuleDefiniens.S_REQ_TEST_PASSED_RATIO_COUNT, ModuleDefiniens.S_REQ_QUALITY_ESTIMATE_COUNT,
+                ModuleDefiniens.S_CRITICAL_RISK, ModuleDefiniens.S_ASSOCIATED_CASE_REQ_COUNT,
+                ModuleDefiniens.S_TOP_ISSUES);
+Iterator<String> iterator = moduleNames.iterator();
+while (iterator.hasNext())
+{
+    String next = iterator.next();
+    iterator.remove(); 
+    iterator = moduleNames.iterator(); // 重置迭代器
+}
+error:UnsupportedOperationException
+原因：moduleNames的类型是Arrays$ArrayList，而不是ArrayList

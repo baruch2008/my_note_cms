@@ -39,3 +39,17 @@ public class FeignClientConfiguration
 @ComponentScan(basePackages = { "com.huawei.allinone.testmanagement", "com.huawei.tdt.common.config",
         "com.huawei.allinone.common
 "})
+
+### eureka注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    // 使用eureka随机分配的内网ip与端口（eureka服务与子服务位于同一台宿主机时，会按照宿主机的IP进行分配。不再同一台则会分配172内网IP）
+    preferIpAddress: true 
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    // 自行设置（与preferIpAddress混用会导致服务注册IP与实际访问IP不一致，会出现忘光服务轮询以及服务之间互相访问异常）
+    instance-id: 100.99.64.130:32041
+    hostname: 100.99.64.130
+    non-secure-port: 32041

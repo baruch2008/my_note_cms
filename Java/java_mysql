@@ -23,6 +23,7 @@ select a.* from signshould as a
 LEFT JOIN (select * from sign where mid=897 and thetype=0) as b ON a.uid=b.uid 
 LEFT JOIN (select * from leaves where mid=897) as c ON a.uid=c.uid  
 where a.mid=897 and b.uid is null and c.uid is null
+注：where后的条件容易错写成 a.uid != b.uid
 
 ## error 
 ### 联合查询表之间排序规则不同 Illegal mix of collations for operation 'UNION'

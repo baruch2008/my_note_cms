@@ -50,6 +50,6 @@ eureka:
     preferIpAddress: true 
     instance-id: ${spring.cloud.client.ipAddress}:${server.port}
     // 自行设置注册ip与端口（与preferIpAddress混用会导致服务注册IP为随机分配，而实际访问IP为自行设置，出现网关服务轮询异常、服务之间互相访问异常）
-    instance-id: 100.99.64.130:32041
-    hostname: 100.99.64.130
-    non-secure-port: 32041
+    instance-id: 192.168.1.xx:xxxx // 注册地址
+    hostname: 192.168.1.xx // 实际访问地址
+    non-secure-port: xxxx // 实际访问端口

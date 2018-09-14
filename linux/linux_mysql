@@ -30,7 +30,10 @@ mysql> quit;
 /usr/local/mysql/bin/mysqld_safe -user=mysql &
 
 ## mysql远程连接设置
+### 修改配置文件
+  $ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+  注释掉bind-address = 127.0.0.1
 ### 授权操作mysql>
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'admin' WITH GRANT OPTION;
+  GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'admin' WITH GRANT OPTION;
 ### 重载授权表mysql>
-FLUSH PRIVILEGES;
+  FLUSH PRIVILEGES;

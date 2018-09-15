@@ -1,5 +1,16 @@
 ### 安装与修改docker配置
-
+DockerFile
+  FROM xx.com/official/tomcat:7-jre8
+  COPY xx-service-0.1-SNAPSHOT.jar /usr/local/
+  COPY startService.sh /opt
+  ENV TZ Asia/Shanghai
+  EXPOSE 9005
+  CMD ["sh","/opt/startService.sh"]
+startService.sh
+  #!/bin/sh
+  mkdir -p /usr/local/allinone/testmanagement/log
+  java -DlogPath=/usr/local/xx/xx/log -DlogFileName=xx-service -jar /usr/local/xx-service-0.1-SNAPSHOT.jar --spring.profiles.active=pro
+  
 ### docker容器自动停止
   详情 
   [com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver.getClusterEndpoints

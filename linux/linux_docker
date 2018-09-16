@@ -10,7 +10,39 @@ startService.sh
   #!/bin/sh
   mkdir -p /usr/local/allinone/testmanagement/log
   java -DlogPath=/usr/local/xx/xx/log -DlogFileName=xx-service -jar /usr/local/xx-service-0.1-SNAPSHOT.jar --spring.profiles.active=pro
-  
+部署脚本
+  deploy_param=$1
+  cd /code/service-code/
+  git checkout xx_branch
+  git pull
+
+  # get deploy pakcage
+  cd /code/service-code/xx-service/docker/
+  if [ -n "$deploy_param" ]; then
+    echo "loading $deploy_param config"
+    sed -i "s/--spring.profiles.active=pro/--spring.profiles.active=$deploy_param/g" ./startService.sh
+  else 
+    echo "loading pro config"
+  fi
+
+  # stop and remove container
+  docker stop xx-service-9005
+  docker rm xx-service-9005
+  docker rmi xx-service:0.1-SNAPSHOT
+
+  # build and run new images
+  cd /code/service-code/
+  mvn clean package -pl xx-service -am docker:build
+
+  docker run -d -v /usr1/xx:/usr/local/xx --network=host --name "xx-service-9005" -p 9005:9005 xx-service:0.1-SNAPSHOT
+
+  # reduction change config
+  cd /code/service-code/xx-service/docker/
+  if [ -n "$deploy_param" ]; then
+    echo "reduction pro config"
+    sed -i "s/--spring.profiles.active=$deploy_param/--spring.profiles.active=pro/g" ./startService.sh
+  fi
+
 ### docker容器自动停止
   详情 
   [com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver.getClusterEndpoints

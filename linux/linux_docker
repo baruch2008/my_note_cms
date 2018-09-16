@@ -48,7 +48,7 @@ startService.sh
 1）	Ubuntu 14.04 100.99.50.126
 2）	配置Docker的apt源
 vi /etc/apt/sources.list
-将deb http://rnd-mirrors-langfang.huawei.com/docker/apt/repo ubuntu-trusty main添加至文件，然后保存退出
+将deb http://xx.com/docker/apt/repo ubuntu-trusty main添加至文件，然后保存退出
 3）	拷贝docker-gpg-key到/root目录下
 执行如下命令：
 (gpg --list-keys //查看秘钥)

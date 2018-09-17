@@ -13,7 +13,7 @@
     /mnt/lib/mysql/ r,          // 设置新目录的可读权限
     /mnt/lib/mysql/** rwk,     // 设置新目录的读写权限
   /etc/init.d/apparmor restart // 重启apparmor服务
-#### 安装mysql数据源
+#### 初始化mysql数据库
   mysql_install_db --user=mysql --ldata=/mnt/lib/mysql/
   service mysql start // 启动mysql服务
   

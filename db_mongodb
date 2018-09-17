@@ -81,7 +81,7 @@ db.Collection.update(
 
 # IN查询+or查询
 db.getCollection('dts').find({
-	"info.department": "统一存储产品软件开发部",
+	"info.department": "xx部",
 	"info.sprodcno": {
 		$in: ["OceanStor OS V500R001C20", "OceanStor OS V500R001C99"]
 	},

@@ -34,6 +34,6 @@ mysql> quit;
   $ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
   注释掉bind-address = 127.0.0.1
 ### 授权操作mysql>
-  GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'admin' WITH GRANT OPTION;
+  GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
 ### 重载授权表mysql>
   FLUSH PRIVILEGES;

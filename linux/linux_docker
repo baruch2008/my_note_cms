@@ -82,7 +82,7 @@ DOCKER_OPTS="-g /docker --insecure-registry xx.com -H unix:///var/run/docker.soc
 在已安装Docker后，要修改存储目录，需先卸载，再删除默认目录/var/lib/docker，然后指定新的目录，最后重新安装
 apt-get remove docker-engine
 sudo apt-get purge docker-engine
-ln -s /docker /var/lib/docker
+ln -s /docker /var/lib/docker  // ln source_file_path target_file_path ln 命令 创建软连接。
 (ln -s /usr1/docker /var/lib/docker)
 rm –rf /var/lib/docker/ 
 （注：在删除时如果报Device or Resource busy错误，需要先umount /var/lib/docker后，在执行删除命令）

@@ -114,3 +114,8 @@ public ResponseResult<String> importKPIExcelTable(
    获取<style> <table>标签
  String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>";
         String regEx_table = "<[\\s]*?table[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?table[\\s]*?>";
+
+构件支持全文检索的日志服务
+drwxr-xr-x  9 elkuser elkgroup  145 Sep 17 09:47 elasticsearch-5.2.0/
+drwxrwxr-x 12 elkuser elkgroup 4096 Sep 17 11:07 kibana-5.2.0-linux-x86_64/
+drwxr-xr-x 12 root    root     4096 Sep 17 09:48 logstash-5.2.0/

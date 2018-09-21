@@ -11,8 +11,8 @@ ubuntu web 服务器搭建
 			选择最小安装，这个是ubuntu 18.04新提供的功能（最小安装包含浏览器和基本工具）
 			把最下面为图像和无线硬件安装第三方软件打上勾
 			正常安装包含以上的东西和办公软件、游戏、多媒体播放器等
-		进入图形界面Ctrl+Fn+F1
-		进入命令行Ctrl+Fn+F3
+		进入图形界面Ctrl+alt+F1
+		进入命令行Ctrl+alt+F3 / Ctrl+alt+T
 			问题1 login incorrect
 				login:电脑名（而不是装系统时设置的用户名）
 				Ubuntu不认小键盘，所以一定要关掉NumLock，使用字母键盘上面的数字按键进行输入
@@ -20,6 +20,7 @@ ubuntu web 服务器搭建
 				$su root
 				#apt-get install zhcon
 				#zhcon --utf8
+			
 	远程访问linux
 		ssh服务器安装
 			#sudo apt-get install update
@@ -37,7 +38,7 @@ ubuntu web 服务器搭建
 			sudo vim /etc/systemd/logind.conf 
 			#HandleLidSwitch=suspend——》HandleLidSwitch=ignore
 			重启服务： 
-			sudo restart systemd-logind & service systemd-logind restart 
+			sudo restart systemd-logind or service systemd-logind restart 
 			或者重启系统
 			sudo shutdown -r now 
 	常用软件安装		
@@ -47,13 +48,20 @@ ubuntu web 服务器搭建
 			解决 bash: /usr/local/java/jdk1.8.0_171/bin/java: 无法执行二进制文件: 可执行文件	
 				使用Linux ARM 64 Hard Float ABI版本的安装包
 				应该使用 Linux x64版本的安装包
-			修改系统变量（存在重启后失效的问题）
+			修改系统变量
 				vim /etc/profile
 					export JAVA_HOME=/usr/local/jdk8
 					export JRE_HOME=${JAVA_HOME}/jre
 					export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
 					export PATH=.:${JAVA_HOME}/bin:$PATH
 				source /etc/profile
+			问题1 root账户的系统变量重启后失效
+				sudo gedit /etc/profile
+					export PATH="$PATH:/home/lincoln/Android/bin"（添加"）
+				source /etc/profile
+				问题1-1 (gedit:3006): Gtk-WARNING **: 20:46:11.230: cannot open display: localhost:10.0
+					解决方案 my-pc:$ sudo xhost +
+					解决原因：将在当前桌面开启图形应用的权限赋予root权限
 		maven （3.2以上，先要安装jdk）
 			下载linux maven 安装包
 				https://maven.apache.org/download.cgi
@@ -119,6 +127,7 @@ ubuntu web 服务器搭建
 				add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu artful stable"
 			部署springboot项目
 				docker的命令文本文件名称必须叫'Dockerfile'
+				编写项目启动脚本并设置为开机自启动
 	windows计算机网线直连ubuntu计算机
 	内网穿透外网映射
 		租房处局域网设备架构
@@ -135,6 +144,12 @@ ubuntu web 服务器搭建
 			用'路由器ip:映射的外部端口'访问内部服务
 		设置动态域名
 			电信光猫超级管理员密码获取器
-		花生壳（内网穿透）服务、ubuntu 系统 Apache+PHP+MySql搭建网站攻略
-			
+		花生壳软件实现ubuntu内网穿透
+			安装包下载
+				https://hsk.oray.com/download/
+			安装启动（开机自启动）
+				dpkg -i phddns_3.0_x86_64.deb
+				phddns start
+			Remote Management Address http://b.oray.com 
+	
 			

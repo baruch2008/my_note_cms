@@ -24,12 +24,6 @@ It's likely that neither a Result Type nor a Result Map was specified.
 2. $将传入的数据直接显示生成在sql中。如：order by $user_id$，如果传入的值是111,那么解析成sql时的值为order by user_id,  如果传入的值是id，则解析成的sql为order by id.
 5.$方式一般用于传入数据库对象，例如传入表名.
 
-### <foreach>标签
-index属性：当前集合遍历次数的计数器，可以用于在插入数据时的自增值的定义
-
-### <choose>标签
-when标签不支持别名，判断与字符串是否相等要用“==”——》<when test="param2 == 'group'">
-
 ### mybatis大于小于符号写法
 #### 第一种写法（1）：
   原符号       <        <=      >       >=       &        '        "
@@ -42,29 +36,40 @@ when标签不支持别名，判断与字符串是否相等要用“==”——�
   小于等于
   <![CDATA[ <= ]]>
   
-### 按条件过滤查询解决方案（支持页面传入正则表达式、单/复选框、时间段）
-前台获取可过滤字段table_header_field
-按用户保存过滤信息filter_condition_group
-<foreach collection="param3" item="filterCondition">
-    <if test="filterCondition.type == 'Text'">
-        and ${filterCondition.fieldName} REGEXP
-        #{filterCondition.value}
-    </if>
-    <if test="filterCondition.type == 'Checked' or filterCondition.type == 'Select'">
-        and ${filterCondition.fieldName} in
-        <foreach collection="filterCondition.selectFieldValues"
-                 item="fieldValue" index="index" open="(" close=")" separator=",">
-            #{fieldValue.value}
-        </foreach>
-    </if>
-    <if test="filterCondition.type == 'Date'">
-        <if test="filterCondition.dateFieldValue.startTime != '--'">
-            and ${filterCondition.fieldName} &gt;=
-            #{filterCondition.dateFieldValue.startTime}
-        </if>
-        <if test="filterCondition.dateFieldValue.endTime != '--'">
-            and ${filterCondition.fieldName} &lt;=
-            #{filterCondition.dateFieldValue.endTime}
-        </if>
-    </if>
-</foreach>
+<choose><when><otherwise> 标签
+	等价于sql语句中的
+		if(exp1,true_result,false_result)
+		case when exp1 then true_result 
+			else 1=1 end
+	when标签不支持别名，判断与字符串是否相等要用“==”——》<when test="param2 == 'group'">
+	
+<foreach>标签
+	index属性
+		当前集合遍历次数的计数器，可以用于在插入数据时的自增值的定义
+	解决方案--按条件过滤查询（支持页面传入正则表达式、单/复选框、时间段）
+		前台获取可过滤字段table_header_field
+		按用户保存过滤信息filter_condition_group
+		<foreach collection="param3" item="filterCondition">
+			<if test="filterCondition.type == 'Text'">
+				and ${filterCondition.fieldName} REGEXP
+				#{filterCondition.value}
+			</if>
+			<if test="filterCondition.type == 'Checked' or filterCondition.type == 'Select'">
+				and ${filterCondition.fieldName} in
+				<foreach collection="filterCondition.selectFieldValues"
+						 item="fieldValue" index="index" open="(" close=")" separator=",">
+					#{fieldValue.value}
+				</foreach>
+			</if>
+			<if test="filterCondition.type == 'Date'">
+				<if test="filterCondition.dateFieldValue.startTime != '--'">
+					and ${filterCondition.fieldName} &gt;=
+					#{filterCondition.dateFieldValue.startTime}
+				</if>
+				<if test="filterCondition.dateFieldValue.endTime != '--'">
+					and ${filterCondition.fieldName} &lt;=
+					#{filterCondition.dateFieldValue.endTime}
+				</if>
+			</if>
+		</foreach>
+	

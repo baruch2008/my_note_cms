@@ -1,3 +1,13 @@
+解决方案--大数据量表备份与更新
+	说明
+		1 对于数据量巨大的表（条数 > 20w），使用delete语句会导致连接超时。
+		2 如果采用分布式锁调配采集服务集群写入数据时，使用delete语句会导致锁超时
+	思路
+		jdbcDao.update("drop table xx_old"); // 删除上次备份表，第一次执行时要手工添加表xx_old或判断xx_old是否存在
+		jdbcDao.update("create table xx1 like xx"); // 创建新表
+		jdbcDao.update("rename table xx to xx_old"); // 备份原表
+		jdbcDao.update("rename table xx1 to xx"); // 新表更名
+	
 JPA接口类报错 spring boot No Identifier specified for entity
 原因：实体中主键字段未加JPA的主键注解
 	@Id

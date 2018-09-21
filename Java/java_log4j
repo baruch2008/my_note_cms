@@ -1,3 +1,9 @@
+解决方案
+	构件支持全文检索的日志服务
+	elasticsearch-5.2.0
+	kibana-5.2.0-linux-x86_64
+	logstash-5.2.0
+
 # 多项目动态设置日志文件 http://www.blogjava.net/stone2083/archive/2010/07/01/324935.html
 ## shell脚本配置(log4j支持占位符)
 java -DlogPath=logPath -DlogFileName=logFileName -jar /service.jar --spring.profiles.active=pro

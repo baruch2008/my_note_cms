@@ -1,0 +1,90 @@
+/*
+* 导出excel文件接口
+*/
+@RequestMapping(value = "/exportExcelTable", method = RequestMethod.POST)
+public String exportExcelTable(HttpServletRequest request, HttpServletResponse response) throws Exception
+{
+	// 设置response流信息的头类型，MIME码
+	response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+	response.setHeader("Content-disposition", "attachment;filename=response.xls");
+	response.setCharacterEncoding("utf-8");
+	OutputStream ouputStream = response.getOutputStream();
+	// 将创建的Excel对象利用二进制流的形式强制输出到客户端去
+	wb.write(ouputStream);
+	// 强制将数据从内存中保存
+	ouputStream.flush();
+	ouputStream.close();
+	return "success";
+}
+source
+	导出文件测试页面代码
+		https://blog.csdn.net/wodewutai17quiet/article/details/53104034
+/*
+* 导入excel文件接口
+*/
+public ResponseResult<String> importKPIExcelTable(@RequestParam(value = "targetFile", required = false) 
+	MultipartFile targetFile) throws Exception
+{
+    String excelToHtml = null;
+	// excel转换为html
+	Workbook wb = WorkbookFactory.create(targetFile.getInputStream());
+	if (wb instanceof XSSFWorkbook)
+	{
+		XSSFWorkbook xWb = (XSSFWorkbook) wb;
+		excelToHtml = xlsxToHtml(xWb);
+	}
+	else if (wb instanceof HSSFWorkbook)
+	{
+		HSSFWorkbook hWb = (HSSFWorkbook) wb;
+		excelToHtml = PoiUtil.excelToHtml(hWb);
+	}
+	...
+}
+
+/*
+* 转换excel文件为html文件
+*/
+public static String excelToHtml(HSSFWorkbook excelBook) throws Exception
+{
+	ExcelToHtmlConverter ethc = new ExcelToHtmlConverter(DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument());
+	ethc.setOutputColumnHeaders(false);
+	ethc.setOutputRowNumbers(false);
+
+	ethc.processWorkbook(excelBook);
+
+	Document htmlDocument = ethc.getDocument();
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
+	DOMSource domSource = new DOMSource(htmlDocument);
+	StreamResult streamResult = new StreamResult(out);
+
+	TransformerFactory tf = TransformerFactory.newInstance();
+	Transformer serializer = tf.newTransformer();
+	serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+	serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+	serializer.setOutputProperty(OutputKeys.METHOD, "html");
+	serializer.transform(domSource, streamResult);
+	out.close();
+
+	String htmlStr = new String(out.toByteArray());
+
+	// htmlStr = htmlStr.replace("<h2>Sheet1</h2>", "")
+	// .replace("<h2>Sheet2</h2>", "")
+	// .replace("<h2>Sheet3</h2>", "")
+	// .replace("<h2>Sheet4</h2>", "")
+	// .replace("<h2>Sheet5</h2>", "");
+	htmlStr = htmlStr.replace("<h2>Sheet1</h2>", "");
+	return htmlStr;
+}
+
+source
+	支持07 03excel转html可用demo
+	https://www.cnblogs.com/linshangxixia/p/4442665.html
+	java xlsx转html
+	http://bewithme.iteye.com/blog/2418535
+	poi转excel，word文档为html
+	https://blog.csdn.net/u012954390/article/details/51325272
+
+骚操作
+	通过正则表达式获取<style> <table>标签中的内容并保留标签
+		String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>";
+		String regEx_table = "<[\\s]*?table[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?table[\\s]*?>";

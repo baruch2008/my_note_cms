@@ -119,3 +119,9 @@ public ResponseResult<String> importKPIExcelTable(
 drwxr-xr-x  9 elkuser elkgroup  145 Sep 17 09:47 elasticsearch-5.2.0/
 drwxrwxr-x 12 elkuser elkgroup 4096 Sep 17 11:07 kibana-5.2.0-linux-x86_64/
 drwxr-xr-x 12 root    root     4096 Sep 17 09:48 logstash-5.2.0/
+
+大表备份思路
+jdbcDao.update("drop table xx_old");
+        jdbcDao.update("create table xx1 like xx");
+        jdbcDao.update("rename table xx to xx_old");
+        jdbcDao.update("rename table xx1 to xx");

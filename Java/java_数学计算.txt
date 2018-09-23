@@ -1,0 +1,3 @@
+向上取整：Math.ceil(double a) 
+向下取整：Math.floor(double a) 
+四舍五入取整：Math.round(double a) 

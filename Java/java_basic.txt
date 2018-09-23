@@ -1,0 +1,27 @@
+Spring RestTemplate: 比httpClient更优雅的Restful URL访问
+
+java对象转换为json字符串
+JSONArray.fromObject(Object).toString()
+
+//保留4位小数
+double d1 = 123.0123456;
+String d2 = String.format("%.4f", d1);
+
+解决xstream fromXML方法解析xml中含有下划线的字段
+  private static XStream xs = new XStream(new DomDriver(null,new XmlFriendlyNameCoder("_-", "_")));
+
+数组转换成为List。
+  List<String> stooges = Arrays.asList(String[]);
+
+使用URI uri = new URI(url);报错 java.net.URISyntaxException: Illegal character in scheme name at index 0:
+  原因
+  地址中涉及了特殊字符，如‘｜’‘&’等。所以不能直接用String代替URI来访问。必须采用%0xXX方式来替代特殊字符。
+  也可以把String转成URL，再能过URL生成URI的方法来解决问题。
+  解决方法（url1.getPath()）
+  URL url1 = new URL(url); 
+  URI uri = new URI(url1.getProtocol(), url1.getAuthority(), url1.getPath(), url1.getQuery(), null);
+
+HashMap的value部分转换为set
+  错误写法：Set<String> groupNames = (Set<String>) arg.values();
+  java.lang.ClassCastException: java.util.HashMap$Values cannot be cast to java.util.Set
+  正确写法：Set<String> groupNames = new TreeSet<>(arg.values());

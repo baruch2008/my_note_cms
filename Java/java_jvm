@@ -1,5 +1,0 @@
-监控后台接口调用次数
-  在JVM中添加如下启动参数：
-  -javaagent:/usr/local/wiseapm-java-agent/wiseapm-javaagent.jar
-  -Dluban_clusterName=wiseapm
-  -Dluban_clusterId=1

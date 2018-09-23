@@ -1,2 +1,0 @@
-TypeError: unbound method a() must be called with A instance as first argument (got nothing instead)
-class中的方法调用：在def前面加上@classmethod，这种类方法的一个特点就是可以通过类名去调用，但是也必须传递一个参数，一般用cls表示class，表示可以通过类直接调用；

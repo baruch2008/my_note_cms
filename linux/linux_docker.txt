@@ -1,0 +1,196 @@
+### 安装与修改docker配置
+DockerFile
+  FROM xx.com/official/tomcat:7-jre8
+  COPY xx-service-0.1-SNAPSHOT.jar /usr/local/
+  COPY startService.sh /opt
+  ENV TZ Asia/Shanghai
+  EXPOSE 9005
+  CMD ["sh","/opt/startService.sh"]
+startService.sh
+  #!/bin/sh
+  mkdir -p /usr/local/allinone/testmanagement/log
+  java -DlogPath=/usr/local/xx/xx/log -DlogFileName=xx-service -jar /usr/local/xx-service-0.1-SNAPSHOT.jar --spring.profiles.active=pro
+部署脚本
+  deploy_param=$1
+  cd /code/service-code/
+  git checkout xx_branch
+  git pull
+
+  # get deploy pakcage
+  cd /code/service-code/xx-service/docker/
+  if [ -n "$deploy_param" ]; then
+    echo "loading $deploy_param config"
+    sed -i "s/--spring.profiles.active=pro/--spring.profiles.active=$deploy_param/g" ./startService.sh
+  else 
+    echo "loading pro config"
+  fi
+
+  # stop and remove container
+  docker stop xx-service-9005
+  docker rm xx-service-9005
+  docker rmi xx-service:0.1-SNAPSHOT
+
+  # build and run new images
+  cd /code/service-code/
+  mvn clean package -pl xx-service -am docker:build
+
+  docker run -d -v /usr1/xx:/usr/local/xx --network=host --name "xx-service-9005" -p 9005:9005 xx-service:0.1-SNAPSHOT
+
+  # reduction change config
+  cd /code/service-code/xx-service/docker/
+  if [ -n "$deploy_param" ]; then
+    echo "reduction pro config"
+    sed -i "s/--spring.profiles.active=$deploy_param/--spring.profiles.active=pro/g" ./startService.sh
+  fi
+
+### Docker安装使用指导
+1	环境准备
+1）	Ubuntu 14.04 100.99.50.126
+2）	配置Docker的apt源
+vi /etc/apt/sources.list
+将deb http://xx.com/docker/apt/repo ubuntu-trusty main添加至文件，然后保存退出
+3）	拷贝docker-gpg-key到/root目录下
+执行如下命令：
+(gpg --list-keys //查看秘钥)
+gpg --import docker-gpg-key //将他人的公钥或者你的其他密钥输入系统
+gpg –fingerprint //生成公钥指纹, 保证服务器上的公钥的可靠性(公钥服务器没有检查机制)
+gpg --sign-key docker-gpg-key //不需要加密文件，只需要对文件签名，表示这个文件确实是我本人发出的
+apt-key add docker-gpg-key //把下载的key添加到本地trusted数据库中
+
+4）	拷贝archives.tar.gz 到/var/cache/apt目录
+ 解压archives.tar.gz 到archives目录，如下： 
+5）	执行apt-get update
+2	安装
+apt-get install docker-engine
+注：默认安装完成，docker服务启动
+执行docker –v查看是否安装成功，正常情况下输出如下内容：
+root@CTU1000105312:/# docker -v
+Docker version 17.05.0-ce, build 89658be
+3	配置
+1)	先停止docker服务
+/etc/init.d/docker stop 或 service docker stop(service docker start)
+2)	配置镜像仓库、远程访问
+vi /etc/default/docker
+将-H unix:///var/run/docker.sock -H 0.0.0.0:2375添加至DOCKER_OPTS配置项中，此配置为支持远程访问
+将--insecure-registry xx.com添加至DOCKER_OPTS配置项中，此配置为设定默认镜像仓库
+最终配置如下(/etc/default/docker)：
+DOCKER_OPTS="-g /docker --insecure-registry xx.com -H unix:///var/run/docker.sock -H 0.0.0.0:5555"
+注：-g /docker为设置本地仓库目录
+3)	修改Docker默认存储
+修改的方式如下几种。
+方式一：
+在已安装Docker后，要修改存储目录，需先卸载，再删除默认目录/var/lib/docker，然后指定新的目录，最后重新安装
+apt-get remove docker-engine
+sudo apt-get purge docker-engine
+ln -s /docker /var/lib/docker  // ln source_file_path target_file_path ln 命令 创建软连接。
+(ln -s /usr1/docker /var/lib/docker)
+rm –rf /var/lib/docker/ 
+（注：在删除时如果报Device or Resource busy错误，需要先umount /var/lib/docker后，在执行删除命令）
+apt-get install docker-engine
+
+方式二：
+在/etc/default/docker中的DOCKER_OPTS配置项中添加-g /docker，/docker为指定目录，重启系统后生效，此方式为解决方式一中在删除/var/lib/docker不能删除，报Device or Resource busy错误时的办法（注：后经确认需要先umount /var/lib/docker）。
+
+	方式三：(未验证)
+	1）备份fstab文件
+cp /etc/fstab /etc/fstab.bak
+2）停止docker服务，并把原目录下的内容拷贝到新目录下
+service docker stop
+mkdir -p /data/docker
+cp -r /var/lib/docker /data/docker
+3）修改fstab，添加如下行，让其挂载到新目录下
+echo "/data/docker /var/lib/docker none bind 0 0" >> /etc/fstab
+4）重新挂载
+mount -a
+重新导入镜像，建立容器后，即可看到docker已经挂载到新目录下了
+5）重启docker
+service docker start
+
+4	Build镜像
+1）通过Maven插件docker-maven-plugin实现在开发IDE中实现工程的Docker镜像的Build以及发布。
+需要在本地配置一个系统参数，
+DOCKER_HOST=tcp://100.99.50.126:2375
+2）pom.xml配置
+<build>
+	<plugins>
+		<plugin>
+			<groupId>com.spotify</groupId>
+			<artifactId>docker-maven-plugin</artifactId>
+			<configuration>
+			  <imageName>${project.name}:${project.version}</imageName>				  <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+			  <skipDockerBuild>false</skipDockerBuild>
+			  <resources>
+				<resource>
+				  <directory>${project.build.directory}</directory>						  <include>${project.build.finalName}.jar</include>
+				 </resource>
+			   </resources>
+			 </configuration>
+			</plugin>
+		</plugins>
+	</build>
+      说明：需要在工程根目录下创建docker文件夹，并将Dockerfile和startService.sh放置于此文件中。如果dockerDirectory指定为${project.baseDir}则插件默认会将工程根目录下的所有目录或文件拷贝至target/docker目录中，包括target本身。
+
+注：对于不需要Build的工程也需要配置此插件，只需将skipDockerBuild设置成true，如下：
+<plugin>
+	<groupId>com.spotify</groupId>
+	<artifactId>docker-maven-plugin</artifactId>
+	<configuration>
+		<skipDockerBuild>true</skipDockerBuild>
+	</configuration>
+</plugin>
+3）Dockerfile编写
+FROM xx.com/official/tomcat:7-jre8
+COPY tdt-testplan-service-0.1.jar /usr/local/
+COPY startService.sh /opt
+ENV TZ Asia/Shanghai
+
+EXPOSE 8050
+CMD ["sh","/opt/startService.sh"]
+
+4）启动文件startService.sh
+#!/bin/sh
+mkdir -p /usr/local/tdt/testplan/log
+
+java -jar /usr/local/xx-service-0.1.jar --spring.profiles.active=pro > /usr/local/tdt/testplan/log/xx-service.log
+		注意：此Shell文件必须确保是UNIX格式，否则会出问题。
+5	操作
+1）	停止docker
+docker stop xx-service-8040
+2）	删除docker
+docker rm xx-service-8040
+3）	删除镜像
+docker rmi xx-service:0.1
+4）	创建容器并运行
+说明：-v参数可以将容器中的指定目录挂载至宿主机对应目录，可以将程序日志通过此种方式挂载至宿主机上方便查看。
+
+
+5）	手动Build镜像
+docker build . -t xx-service:0.1 --rm .
+6）	删除类型为<none>的镜像
+docker images|grep none|awk '{print $3 }'|xargs docker rmi
+6	FAQ
+1）	删除/var/lib/docker报Device or Resource busy错误
+umount /var/lib/docker
+rm –rf /var/lib/docker
+
+2）	redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+需在代码中配置Redis资源池，参见类RedisCacheConfiguration。
+
+3）	添加新的磁盘
+fdisk /dev/xvde (注：创建成主分区，若为扩展分区则不能格式化)
+mkfs –t ext4 /dev/xvde1
+mount –t ext4 /dev/xvde1 /docker
+
+### docker容器自动停止
+  详情 
+  [com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver.getClusterEndpoints
+  (ConfigClusterResolver.java:43)-(AsyncResolver-bootstrap-executor-0)] 
+  Resolving eureka endpoints via configuration
+  Killed
+  原因
+  内核检测到没有足够的内存可以分配，就会扔出 OOME(Out Of Memmory Exception)，并开始杀死一些进程用于释放内存空间大量的容器把主机的内存消耗殆尽，
+  docker 尝试通过调整 docker daemon 的 OOM 优先级来进行缓解。内核在选择要杀死的docker容器时会按其对进程打分，直接杀死得分最高的进程，接着是下一个。
+  docker核心进程docker daemon 的 OOM 优先级非常低。
+  解决办法
+  增加机器的可用内存
+  

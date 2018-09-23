@@ -1,0 +1,55 @@
+FeignClient中不加url属性，默认调用同一个注册中心的服务
+
+@FeignClient Method has too many Body parameters
+异常原因：当使用FeignClient调用三方接口时，如果发送的是get请求，那么需要在请求参数前加上@RequestParam注解修饰，Controller里面可以不加该注解修饰。
+
+### 配置FeignClient注解
+@Configuration
+public class FeignClientConfiguration
+{
+    @Value("${allinoneauthtoken.key}")
+    private String tokenKey;
+
+    @Value("${allinoneauthtoken.value}")
+    private String tokenValue;
+
+    @Bean
+    public RequestInterceptor headerInterceptor()
+    {
+        return new RequestInterceptor()
+        {
+            @Override
+            public void apply(RequestTemplate requestTemplate)
+            {
+                List<String> authorizationList = Lists.newArrayList(tokenValue);
+                List<String> contentTypeList = Lists.newArrayList("application/json");
+                Map<String, Collection<String>> headers = ImmutableMap.of(tokenKey, authorizationList,
+                        "Content-Type", contentTypeList);
+                requestTemplate.headers(headers);
+            }
+        };
+    }
+}
+@FeignClient(name = "xx-service", url = "${xx.xx.xx}", configuration = FeignClientConfiguration.class)
+
+### 接收cookie中的参数
+@CookieValue(value="xx")
+
+### 扫描包注解
+@ComponentScan(basePackages = { "com.huawei.allinone.testmanagement", "com.huawei.tdt.common.config",
+        "com.huawei.allinone.common
+"})
+
+### eureka注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    // 随机分配注册ip与端口（eureka服务与子服务位于同一台宿主机时，会按照宿主机的IP进行分配。不再同一台则会分配172内网IP）
+    preferIpAddress: true 
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    // 自行设置注册ip与端口（与preferIpAddress混用会导致服务注册IP为随机分配，而实际访问IP为自行设置，出现网关服务轮询异常、服务之间互相访问异常）
+    instance-id: 192.168.1.xx:xxxx // 注册地址
+    hostname: 192.168.1.xx // 实际访问地址
+    non-secure-port: xxxx // 实际访问端口

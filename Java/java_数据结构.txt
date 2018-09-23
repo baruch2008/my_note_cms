@@ -1,0 +1,45 @@
+# 倒序
+Collections.reverse()
+# 判断列表中是否包含指定元素
+list.contains()
+# 并集
+list1.addAll(list2);
+# 交集
+list1.retainAll(list2);
+# 差集
+list1.removeAll(list2);
+
+# 将一个list均分成n个list(主要通过偏移量来实现)
+public static <T> List<List<T>> averageAssign(List<T> source, int n) {
+    List<List<T>> result = new ArrayList<List<T>>();
+    int remaider = source.size() % n;  // 取余，最后一个list的长度
+    int number = source.size() / n;  // 每组的长度
+    int offset = 0;//偏移量
+    for (int i = 0; i < n; i++) {
+        List<T> value = null;
+        if (remaider > 0) {
+            value = source.subList(i * number + offset, (i + 1) * number + offset + 1);
+            remaider--;
+            offset++;
+        } else {
+            value = source.subList(i * number + offset, (i + 1) * number + offset);
+        }
+        result.add(value);
+    }
+    return result;
+}
+
+# list remove的坑
+List<String> moduleNames = Arrays.asList(ModuleDefiniens.S_SERVICE_OF_SUMMARY,
+                ModuleDefiniens.S_REQ_TEST_PASSED_RATIO_COUNT, ModuleDefiniens.S_REQ_QUALITY_ESTIMATE_COUNT,
+                ModuleDefiniens.S_CRITICAL_RISK, ModuleDefiniens.S_ASSOCIATED_CASE_REQ_COUNT,
+                ModuleDefiniens.S_TOP_ISSUES);
+Iterator<String> iterator = moduleNames.iterator();
+while (iterator.hasNext())
+{
+    String next = iterator.next();
+    iterator.remove(); 
+    iterator = moduleNames.iterator(); // 重置迭代器
+}
+error:UnsupportedOperationException
+原因：moduleNames的类型是Arrays$ArrayList，而不是ArrayList

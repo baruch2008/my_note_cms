@@ -1,0 +1,24 @@
+web工程师（java后端）知识体系（追求高并发，高可用，高性能，安全，存储，业务等等）
+	java基础
+		jvm原理
+		java基础
+		设计模式
+		多线程
+		spring+springmvc原理及源码
+	相关应用
+		linux
+		mysql事务隔离与锁机制
+		mongodb
+	web技术
+		http/tcp
+	架构原理
+		分布式架构（dubbo，dubbox，spring cloud），
+		弹性计算架构，
+		微服务架构（springboot+zookeeper+docker+jenkins）
+	性能优化
+		jvm性能优化
+		mysql性能优化
+		tomcat性能优化
+	项目管理
+		约定大于配置
+			系统，类库，框架应该假定合理的默认值，而非要求提供不必要的配置

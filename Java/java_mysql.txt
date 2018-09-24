@@ -1,3 +1,5 @@
+# 导出mysql表为html（语句有问题）
+	mysql -uroot -p -e"select * from cxyp_student_score_third"-D cxyp -html > D:\1.html;
 ### 排查数据库执行慢
   show processlist
 ### 查询速度优化

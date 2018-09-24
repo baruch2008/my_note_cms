@@ -1,0 +1,64 @@
+tree E:\abc >E:\1.xls /f // 生成目录树结构 
+tree /f > list.txt
+Dir E:\abc /s /a >E:\  // 生成文件详细列表
+
+::pause
+::start cmd
+::@echo off 关闭命令回显
+cd\ 
+D:
+cd "ngrok-stable-windows-amd64"
+ngrok http 8080
+@cmd.exe
+
+# ip
+ipconfig
+# ping
+ping ipaddress
+ping -t ipaddress // 一直ping
+
+# 启动DirectX自动诊断，(Direct eXtension，简称DX)是由微软公司创建的多媒体编程接口
+dxdiag
+
+# windows查看端口占用
+-- 列出所有端口的情况
+netstat -ano
+-- 查出指定端口的PID
+netstat -aon|findstr "3306"
+-- 查看进程id（PID）被占用情况
+tasklist|findstr "3068"
+-- 结束该进程
+windows10——任务管理器——服务——通过PID找到服务——停止
+cmd：taskkill /f /t /im mysqld.exe
+
+# 定时关机
+shutdown -s -t 60 // 设置60s后自动关机
+shutdown -a // 取消自动关机
+
+# 删除 D:\temp\目录下的所有文件的写法如下：
+rmdir I:\hibernate资料\ /S /Q(其中rmdir 与rd命令相同)
+rd I:\spring_boot_spring_cloud_docker资料\ /S /Q
+rd H:\java资料_淘课店主推荐_02\ /S /Q
+rmdir d:\temp\ /S /Q
+del d:\temp\ /S /Q
+# /S 表示除目录本身外，还将删除指定目录下的所有子目录和文件。
+# /Q 表示安静模式，删除时不需要经过确认。
+# 推荐使用rmdir 命令，批量删除大量文件时比del 更高效快速。
+
+# 生成电池性能报告
+Powercfg /batteryreport
+
+# 移动文件
+move C:\Users\MY-PC\battery-report.html C:\Users\MY-PC\Desktop
+
+# 服务
+services.msc
+
+e: 回车
+dir 回车   //就可以看到E盘的目录结构了 
+cd ./目标文件夹 回车   //就可以进入目标文件夹了
+cd ..  回车   //就可以退出当前文件夹
+cls 回车  //清屏就恢复到最初的样子了
+
+# 查看文本文件
+type 文本文件.txt

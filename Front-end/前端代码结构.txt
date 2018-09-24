@@ -1,3 +1,36 @@
+Bootstrap 
+	基于 HTML、CSS、JAVASCRIPT来开发 Web 应用程序和网站的前端UI框架
+		JavaScript组件依赖于jQuery
+	用于页面布局样式设计，CSS等，与数据无关，是一种UI设计工具，一般搭配angularjs使用
+angularjs
+	一个javascript的mvvm的框架，是为了开发有复杂业务逻辑的CRUD应用而生的。
+	操控html元素（数据绑定、重复、隐藏）
+	操纵数据不是通过抓取和注入。一般通过数据绑定来实现，野蛮抓取注入数据。也能够改变每个组件的状态，不过在切换时就会暴露出问题
+jquery
+	一个 JavaScript 函数库，与angularjs作用一样，但更偏重于操作dom元素（遍历和修改）
+	使用jQuery操作数据抓住并注入到DOM的方式基本上基于事件。当我们使用Bootstrap JavaScript组件时，比如一个按钮，我们需要“单击此按钮时，设置此按钮为激活状态”。并将这种设置添加入新加的按钮中。通过添加 .active 类和检查input（如果你的按钮是一个input）为实现。
+easyUI
+	基于jQuery的UI框架，所有效果都由jQuery实现
+	
+ajax传送json格式数据，调用restful接口
+	关键
+		指定contentType，data要是json格式
+		调用restful接口，type:get/post/delete/put
+	demo（调用登录接口）
+		var post_data={"name":"test001","pass":"xxxx"};
+		$.ajax({
+			url: "http://192.168.10.111:8080/uc/login",
+			type: 'post',
+			contentType: "application/json; charset=utf-8",
+			data:JSON.stringify(post_data),
+			success:function (data) {
+				//调用成功
+			},
+			error: function(data, textStatus, errorThrown){
+				//调用失败
+			}
+		});
+
 前后端分离架构，运行在ubuntu1404apache2:1.0服务器
 名称	大小	修改日期
 css/		2018/7/16 下午3:15:10

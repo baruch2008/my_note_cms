@@ -1,0 +1,4 @@
+相对路径上下文位置，.java文件在"xx-service"中，忽略java文件所在包路径
+  File file = new File("../");
+  absolutePath:X:\eclipse-workspace\xx-service\..
+  实际路径为 X:\eclipse-workspace

@@ -22,3 +22,11 @@ https://admin:password@github.com
 	Cygwin uses persistent shared memory sections, which can on occasion become corrupted. The symptom of this is that some Cygwin programs begin to fail, but other applications are unaffected. Since these shared memory sections are persistent, often a reboot is needed to clear them out before the problem can be resolved.
 	解决方法（git\bin\目录下执行cmd）
 	rebase.exe -b 0x50000000 msys-1.0.dll
+
+创建分支的同时切换到该分支上
+	git checkout -b [branch name]
+	效果相当于以下两步操作：
+	git branch [branch name]
+	git checkout [branch name]
+将新分支推送到github
+	git push origin [branch name]

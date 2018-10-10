@@ -19,7 +19,6 @@ TaskMsgSender-->TaskMsgReceiver-->All TaskHandler
 MQ
 ├─handler
 │      CloudTestCaseCollectHandler.java
-│      CloudTestCaseCollectHandler2.java
 │      TestCaseCollectHandler.java
 │      TmssTestCaseCollectHandler.java
 |         |--process 执行具体任务

@@ -16,6 +16,24 @@ rabbitmqctl start_app
 #### 消息发送流程
 TaskMsgSender-->TaskMsgReceiver-->All TaskHandler
 
-Handler
-  |--process 执行具体任务
-  |--getFocusMessageType 设置其关注的消息类型
+MQ
+├─handler
+│      CloudTestCaseCollectHandler.java
+│      CloudTestCaseCollectHandler2.java
+│      TestCaseCollectHandler.java
+│      TmssTestCaseCollectHandler.java
+|         |--process 执行具体任务
+|         |--getFocusMessageType 设置其关注的消息类型
+│      
+├─listener
+│      TestCaseCollectTaskMsgReceiver.java
+│      
+├─model
+│      CloudTestCaseCollectTaskMsg.java
+│      TestCaseCollectTaskMsg.java
+│      TmssTestCaseCollectTaskMsg.java
+│      
+└─sender
+        TestCaseCollectCompleteMsgSender.java
+        TestCaseCollectTaskMsgSender.java
+

@@ -1,0 +1,20 @@
+分库分表三方包
+sharding
+
+DATAROUTER
+├─multidatabase 数据库路由
+│  │  DataSourceAspect.java
+│  │  DataSourceConfigItem.java
+│  │  DynamicDataSource.java
+│  │  MultiDataBaseFactory.java
+│  │  
+│  └─config
+│          MultiDataBaseConfig.java
+│          ShardingTableInfo.java
+│          
+└─sharding sharding三方包使用
+    │  DatabaseShardingAlgorithm.java
+    │  TableShardingAlgorithm.java
+    │  
+    └─config
+            ShardDataSourceFactory.java

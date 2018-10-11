@@ -1,3 +1,9 @@
+Spring4.3 http方法注解
+	@GetMapping
+		@RequestMapping(method = RequestMethod.GET)的缩写。该注解将HTTP Get 映射到特定的处理方法上。
+	@PostMapping、@PutMapping、@DeleteMapping、@PatchMapping
+	来帮助简化常用的HTTP方法的映射，并更好地表达被注解方法的语义。
+  
 ### 定时任务多线程配置
   import java.util.concurrent.Executors;
   import org.springframework.context.annotation.Configuration;

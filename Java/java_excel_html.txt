@@ -1,24 +1,23 @@
-/*
-* 导出excel文件接口
-*/
-@RequestMapping(value = "/exportExcelTable", method = RequestMethod.POST)
-public String exportExcelTable(HttpServletRequest request, HttpServletResponse response) throws Exception
-{
-	// 设置response流信息的头类型，MIME码
-	response.setContentType("application/vnd.ms-excel;charset=UTF-8");
-	response.setHeader("Content-disposition", "attachment;filename=response.xls");
-	response.setCharacterEncoding("utf-8");
-	OutputStream ouputStream = response.getOutputStream();
-	// 将创建的Excel对象利用二进制流的形式强制输出到客户端去
-	wb.write(ouputStream);
-	// 强制将数据从内存中保存
-	ouputStream.flush();
-	ouputStream.close();
-	return "success";
-}
-source
-	导出文件测试页面代码
-		https://blog.csdn.net/wodewutai17quiet/article/details/53104034
+导出excel文件接口
+	demo
+		@RequestMapping(value = "/exportExcelTable", method = RequestMethod.POST)
+		public String exportExcelTable(HttpServletRequest request, HttpServletResponse response) throws Exception
+		{
+			// 设置response流信息的头类型、MIME码
+			response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+			response.setHeader("Content-disposition", "attachment;filename=response.xls");
+			response.setCharacterEncoding("utf-8");
+			OutputStream ouputStream = response.getOutputStream();
+			// 将创建的Excel对象wb利用二进制流的形式强制输出到客户端去
+			wb.write(ouputStream);
+			// 强制将数据从内存中保存
+			ouputStream.flush();
+			ouputStream.close();
+			return "success";
+		}
+	source
+		导出文件测试页面代码
+			https://blog.csdn.net/wodewutai17quiet/article/details/53104034
 /*
 * 导入excel文件接口
 */

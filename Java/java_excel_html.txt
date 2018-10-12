@@ -8,7 +8,7 @@
 			response.setHeader("Content-disposition", "attachment;filename=response.xls");
 			response.setCharacterEncoding("utf-8");
 			OutputStream ouputStream = response.getOutputStream();
-			// 将创建的Excel对象wb利用二进制流的形式强制输出到客户端去
+			// poi.WorkBook类实例wb转化为字节流，并输出到响应体中
 			wb.write(ouputStream);
 			// 强制将数据从内存中保存
 			ouputStream.flush();

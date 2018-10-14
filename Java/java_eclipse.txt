@@ -2,3 +2,7 @@
 	console悬浮窗口固定到eclipse主界面
 		视图重置
 			菜单栏 Window -> perspective -> Reset Perspective
+
+编辑设置
+	设置文件默认编辑器
+		Window -> Preferences -> General ->  Editors -> File Associations

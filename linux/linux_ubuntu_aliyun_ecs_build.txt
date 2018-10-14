@@ -1,45 +1,4 @@
-ubuntu web 服务器搭建
-	ubuntu系统安装
-		下载 ubuntu系统镜像
-			https://www.ubuntu.com/download/desktop
-		制作U盘启动盘
-			工具：UltraISO
-			流程：菜单——》启动——》写入硬盘映像
-		安装ubuntu系统镜像
-			F12选择boot项目，用安装U盘启动
-			不接入wifi，连接网络会下载常用软件，拖慢安装的速度
-			选择最小安装，这个是ubuntu 18.04新提供的功能（最小安装包含浏览器和基本工具）
-			把最下面为图像和无线硬件安装第三方软件打上勾
-			正常安装包含以上的东西和办公软件、游戏、多媒体播放器等
-		进入图形界面Ctrl+alt+F1
-		进入命令行Ctrl+alt+F3 / Ctrl+alt+T
-			问题1 login incorrect
-				login:电脑名（而不是装系统时设置的用户名）
-				Ubuntu不认小键盘，所以一定要关掉NumLock，使用字母键盘上面的数字按键进行输入
-			问题2 命令行模式下显示小方格（临时处理）
-				$su root
-				#apt-get install zhcon
-				#zhcon --utf8
-	远程访问linux
-		ssh服务器安装
-			#sudo apt-get install update
-			#sudo apt-get install openssh-server
-			#ps -e | grep ssh （ssh安装成功显示：7124 ?  00:00:00 sshd）
-		windows系统访问linux（只有/home/my-pc目录下有sftp上传权限）
-			system: windows 10 
-			client_app: MobaXterm_Personal_9.4
-			port: 22
-			ip: 192.168.1.xx #因为windows机器和linux机器处于同一个局域网内，直接连linux机器的内网ip
-			查看linux ip iproute2
-				ip addr
-			访问前先在windows机器上ping一下linux机器
-		设置linux机器合盖后持续运行
-			sudo vim /etc/systemd/logind.conf 
-			#HandleLidSwitch=suspend——》HandleLidSwitch=ignore
-			重启服务： 
-			sudo restart systemd-logind or service systemd-logind restart 
-			或者重启系统
-			sudo shutdown -r now 
+aliyun ecs web服务器搭建
 	常用软件安装		
 		jdk 1.8
 			jdk安装包下载
@@ -64,11 +23,12 @@ ubuntu web 服务器搭建
 		maven （3.2以上，先要安装jdk）
 			下载linux maven 安装包
 				https://maven.apache.org/download.cgi
+				http://mirrors.hust.edu.cn/apache/maven/maven-3/3.5.4/binaries/
 				Files -> Binary tar.gz archive -> apache-maven-3.5.4-bin.tar.gz
 			配置本地仓库、远程仓库路径
 			修改系统变量
 				vim /etc/profile
-					export MAVEN_HOME=/usr/local/maven3.5
+					export MAVEN_HOME=/usr/local/lib/apache-maven-3.5.4/
 					export PATH=${MAVEN_HOME}/bin:${PATH}
 				source /etc/profile
 			mvn打包加入xml与yml文件
@@ -98,25 +58,27 @@ ubuntu web 服务器搭建
 				  <!--配置打包时不过滤非java文件结束 -->
 				</build>
 		mysql （5.5以上）
+			sudo apt-get update // 更新软件源
 			sudo apt-get install mysql-server
 			修改密码注意password字段 -> authentication_string字段
 				mysql>update mysql.user set authentication_string=password('root') where user='root'; 
 			修改配置文件
 				$ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
-				注释掉bind-address = 127.0.0.1
-				重启mysql：service mysql restart
+				注释掉bind-address = 127.0.0.1 // 解除绑定地址
+				重启mysql：service mysql restart & /etc/init.d/mysql restart
 			授权操作
-				mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'admin' WITH GRANT OPTION;
-			重载授权表
+				mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+			重载授权表，让权限立即生效
 				mysql>FLUSH PRIVILEGES;
 			解决 2003 - cant connect ro mysql server on（10060）特殊情况
-				防火墙开放3306端口
-					vi /etc/sysconfig/iptables // 打开防火墙配置文件
-						add > -A INPUT -m state --state NEW -m tcp -p tcp --dport 3306 -j ACCEPT
-					service iptables restart // 重启防火墙
+				阿里云服务器配置安全组规则
+					云服务器ESC->网络和安全->安全组->配置规则，如果没有3306端口，添加安全组规则
+						协议类型：MY SQL(3306)；
+						授权对象：0.0.0.0/0
+						然后验证通过，等会再试连接即可成功。
 		git（使用码云管理代码，目前存在无法pull文件的问题）
 			apt-get update -y
-			apt install git
+			apt-get install git
 			windows创建.gitingore文件
 				准备创建.gitingore的目录->cmd 
 					ren 1.txt .gitingore
@@ -132,28 +94,6 @@ ubuntu web 服务器搭建
 			部署springboot项目
 				docker的命令文本文件名称必须叫'Dockerfile'
 				编写项目启动脚本并设置为开机自启动
-	windows计算机网线直连ubuntu计算机
-	内网穿透外网映射
-		租房处局域网设备架构
-			中国电信光猫（一级网关 192.168.1.1 路由器设置页面密码:nmrep）
-				|
-				|--FAST_355F0A（ip:192.168.1.9 二级网关 192.168.2.1 wifi_passwd:networktest）
-		FAST_355F0A设置路由器配置
-			设置界面地址 192.168.2.1
-			电脑--网线--FAST_355F0A（登录web设置界面前重启路由器）
-		设置端口映射
-			虚拟服务配置 --> 填写内网ip、要映射的内部端口和外部端口
-			查看路由器ip（公网ip）
-				路由器设置 --> 运行状态 --> WAN --> 本地地址或WAN IP
-			用'路由器ip:映射的外部端口'访问内部服务
-		设置动态域名
-			电信光猫超级管理员密码获取器
-		花生壳软件实现ubuntu内网穿透
-			安装包下载
-				https://hsk.oray.com/download/
-			安装启动（开机自启动）
-				dpkg -i phddns_3.0_x86_64.deb
-				phddns start
-			Remote Management Address http://b.oray.com 
+	
 	
 			

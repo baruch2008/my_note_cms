@@ -54,6 +54,8 @@ eureka注册中心配置
         non-secure-port: xxxx // 实际访问端口
 
 启动类中加入跨域过滤器解决跨域问题
+    问题来源
+        前后台分离架构，前端调用后台接口时会出现跨域问题
     过滤器
         @Component
         public class CorsFilter implements Filter {
@@ -92,6 +94,8 @@ eureka注册中心配置
             source.registerCorsConfiguration("/**", buildConfig()); // 4
             return new CorsFilter(source);
         }
+    注意事项
+        前端通过网关服务转发请求到其他微服务时，不能在网关服务加跨域过滤器做统一跨域处理
 
 eclipse debug启动springboot问题
     没有下断点，但以debug方式启动后都会在SilentExitExceptionHandler类中的throw new SilentExitException()处断开 

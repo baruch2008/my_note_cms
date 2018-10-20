@@ -52,3 +52,10 @@ eureka注册中心配置
         instance-id: 192.168.1.xx:xxxx // 注册地址
         hostname: 192.168.1.xx // 实际访问地址
         non-secure-port: xxxx // 实际访问端口
+
+启动类中加入跨域过滤器解决跨域问题
+
+eclipse debug启动springboot问题
+    没有下断点，但以debug方式启动后都会在SilentExitExceptionHandler类中的throw new SilentExitException()处断开 
+    解决办法
+        window->preferences->java->debug 取消勾选 suspend execution on uncaught exceptions

@@ -44,3 +44,6 @@ http访问
 			}  
 		}  
 	} 
+	
+jar包出现了冲突
+	java.lang.reflect.InvocationTargetException

@@ -1,0 +1,8 @@
+SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+时间字符串转化为 long字符串
+    Date date = format.parse("2016-09-08 09:15:12");
+    System.out.println(date.getTime());  //将时间转化为毫秒数例如: 1473297300000
+将long字符串转化为时间格式化
+    Date date=new Date(Long.parseLong("1473297360000"));  
+    time=format.format(date);  
+    System.out.println(time);  

@@ -15,6 +15,12 @@ Integer getCaseExeResultNumByItemUris(@Param("list") List<String> itemUris, Stri
 It's likely that neither a Result Type nor a Result Map was specified.
 正确写法：<select="xx" resultType="Integer">
 
+聚合函数未设置别名
+Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+### Cause: java.lang.IllegalStateException: Can't find index: AggregationSelectItem(type=SUM, innerExpression=(c.commit_addeds), alias=Optional.absent(), derivedAggregationSelectItems=[], index=-1), please add alias for aggregate selections
+SELECT 
+	SUM(c.commit_addeds) - SUM(c.commit_deleteds) AS totalAddCode,
+原因：每个聚合函数都需要设置别名
 
 ### mapper文件报错：不允许有匹配 "[xX][mM][lL]" 的处理指令目标
 一个mapper中出现多个头信息导致，一般是mapper.xml解决冲突的时候留下的

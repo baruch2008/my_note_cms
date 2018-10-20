@@ -41,6 +41,19 @@ dbconfig.yml
     1.不支持分片的表与不分片的表JOIN
     2.不支持分片表的DISTINCAT
     3.通过sharding-jdbc操作的不分片的表也要在dbconfig.yml-sharding.config.sharding.tables中配置actual-data-nodes，否则会报参数null指针异常
+
+error
+    解决连接池实例冲突
+        file [D:\..\*Mapper.class] required a single bean, but 2 were found:
+            - dataSource: defined by method 'dataSource' in class path resource [io/shardingsphere/jdbc/spring/boot/SpringBootConfiguration.class]
+            - xxDataSource: defined by method 'xxDataSource' in class path resource [../DataSourceConfig.class]
+        原因
+            shardingsphere的连接池默认名称为dataSource，结果自定义连接池名字也叫dataSource，产生冲突
+        解决方案
+            去掉@ComponentScan(basePackages = {...})中冲突连接池引用
+    表分片后字段类型不同导致的sharding框架报错
+        Caused by: io.shardingsphere.core.exception.ShardingException:  
+        Cannot get uniformed table structure for t_code_mergerequestinfo. The different column metadata of actual tables is as follows 
     
 DATAROUTER
 ├─multidatabase 数据库路由

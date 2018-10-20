@@ -53,6 +53,10 @@ eureka注册中心配置
         hostname: 192.168.1.xx // 实际访问地址
         non-secure-port: xxxx // 实际访问端口
 
+强制下线eureka注册中心注册的子服务
+    curl -X PUT "http://admin:admin@192.168.101.100:8761/eureka/apps/{appName}/{instanceId}/status?value=OUT_OF_SERVICE"
+	说明：admin:admin是eureka的登录名和密码，如果没有，直接去掉前面这段。cURL是一个利用URL语法在命令行下工作的文件传输工具，-x 选项可以为CURL添加代理功能，PUT为指定其它协议
+
 启动类中加入跨域过滤器解决跨域问题
     问题来源
         前后台分离架构，前端调用后台接口时会出现跨域问题

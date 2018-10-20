@@ -40,8 +40,7 @@ dbconfig.yml
 注意事项
     1.不支持分片的表与不分片的表JOIN
     2.不支持分片表的DISTINCAT
-    3.通过sharding-jdbc操作的不分片的表也要在dbconfig.yml-sharding.config.sharding.tables中配置actual-data-nodes，否则会报参数null指针异常
-
+    
 error
     解决连接池实例冲突
         file [D:\..\*Mapper.class] required a single bean, but 2 were found:
@@ -54,7 +53,26 @@ error
     表分片后字段类型不同导致的sharding框架报错
         Caused by: io.shardingsphere.core.exception.ShardingException:  
         Cannot get uniformed table structure for t_code_mergerequestinfo. The different column metadata of actual tables is as follows 
-    
+    sharding-mybatis查询不分片表报参数异常
+        Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+        ### Error updating database.  Cause: java.lang.NullPointerException
+        ### The error occurred while setting parameters
+        Caused by: java.lang.NullPointerException
+            at io.shardingsphere.core.jdbc.metadata.dialect.JDBCShardingRefreshHandler.execute(JDBCShardingRefreshHandler.java:49)
+            at io.shardingsphere.core.jdbc.core.statement.ShardingPreparedStatement.execute(ShardingPreparedStatement.java:159)
+            at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:46)
+        解决方法
+            通过sharding-jdbc操作的不分片的表也要在dbconfig.yml-sharding.config.sharding.tables中配置actual-data-nodes，否则会报参数null指针异常
+    添加ShardingMapperScanConfig.java未在dbconfig.yml中添加配置
+        nested exception is org.springframework.beans.factory.BeanCreationException: 
+        Error creating bean with name 'io.shardingsphere.jdbc.spring.boot.SpringBootConfiguration': Initialization of bean failed; nested exception is java.lang.NullPointerException
+        没有配置
+        sharding:
+          jdbc:
+            datasource:
+              names: code_center
+              ...
+            
 DATAROUTER
 ├─multidatabase 数据库路由
 │  │  DataSourceAspect.java

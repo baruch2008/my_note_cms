@@ -13,7 +13,7 @@ SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 字符串中提取数字
 
-字符串中截取两个子字符串之前的内容（使用场景：截取html与）
+字符串中截取两个子字符串之间的内容（使用场景：截取html与）
     String soap = "abc3443abcfgjhgabcgfjabc";
     String rgex = "abc(.*?)abc";
     Pattern pattern = Pattern.compile(rgex);

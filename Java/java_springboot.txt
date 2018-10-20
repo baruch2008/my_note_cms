@@ -54,6 +54,44 @@ eureka注册中心配置
         non-secure-port: xxxx // 实际访问端口
 
 启动类中加入跨域过滤器解决跨域问题
+    过滤器
+        @Component
+        public class CorsFilter implements Filter {
+            final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
+
+            public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+                HttpServletResponse response = (HttpServletResponse) res;
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+                System.out.println("*********************************过滤器被使用**************************");
+                chain.doFilter(req, res);
+            }
+            public void init(FilterConfig filterConfig) {}
+            public void destroy() {}
+        }
+    启动类中引入
+        private CorsConfiguration buildConfig()
+        {
+            CorsConfiguration corsConfiguration = new CorsConfiguration();
+            corsConfiguration.addAllowedOrigin("*");
+            corsConfiguration.addAllowedHeader("*");
+            corsConfiguration.addAllowedMethod("*");
+            return corsConfiguration;
+        }
+
+        /**
+         * 过滤网址
+         * @return CorsFilter x
+         */
+        @Bean
+        public CorsFilter corsFilter()
+        {
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", buildConfig()); // 4
+            return new CorsFilter(source);
+        }
 
 eclipse debug启动springboot问题
     没有下断点，但以debug方式启动后都会在SilentExitExceptionHandler类中的throw new SilentExitException()处断开 

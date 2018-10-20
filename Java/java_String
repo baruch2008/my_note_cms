@@ -21,3 +21,20 @@ SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     while (m.find()) {
         String result = m.group(i); // 获取结果
     }
+
+判断字符串是否为数字
+    public static boolean isInteger(String str) {  
+        // 方法1
+        Pattern pattern = Pattern.compile("[0-9]*");
+        // 方法2
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");    
+        return pattern.matcher(str).matches();    
+      } 
+      
+拼接字符串（StringBuffer类似）
+    StringBuilder sb = new StringBuilder();
+    long ts = System.currentTimeMillis();
+    for (int i = 0; i < 100000; i++) {
+        sb.append(String.valueOf(i));
+    }
+    sb.toString();

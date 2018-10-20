@@ -1,10 +1,43 @@
-分库分表插件sharding依赖
-<dependency>
-    <groupId>io.shardingsphere</groupId>
-    <artifactId>sharding-jdbc</artifactId>
-    <version>3.0.0.M1</version>
-</dependency>
+pom.xml
+    <dependency>
+        <groupId>io.shardingsphere</groupId>
+        <artifactId>sharding-jdbc</artifactId>
+        <version>3.0.0.M1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-dbcp2</artifactId>
+        <version>2.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+    </dependency>
 
+dbconfig.yml
+    spring:
+      datasource:
+        type: org.apache.commons.dbcp2.BasicDataSource
+    sharding:
+      jdbc:
+        datasource:
+          names: db_test // 可以添加多个数据源
+          code_center:
+            type: org.apache.commons.dbcp.BasicDataSource
+            driver: com.mysql.jdbc.Driver
+            url: jdbc:mysql://ip:3306/db_test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+            username: root
+            password: 123456
+        config:
+          sharding:
+            tables:
+              table_test: // 需要分部署读取的表名，去除分片数字标识
+                actual-data-nodes: db_test.table_test_$->{0..9} // 设置实际数字节点名称
+                table-strategy: // 分片策略
+                  inline:
+                    sharding-column: sharding_id // 分片来源行
+                    algorithm-expression: table_test_$->{sharding_id % 10} // 分片算法设置，以sharding_id除以10的余数为片标识
+                    
 DATAROUTER
 ├─multidatabase 数据库路由
 │  │  DataSourceAspect.java

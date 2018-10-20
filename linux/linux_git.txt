@@ -30,3 +30,17 @@ https://admin:password@github.com
 	git checkout [branch name]
 将新分支推送到github
 	git push origin [branch name]
+
+企业git分支管理方法
+	主分支说明：gamma分支为测试环境、master为生产环境
+	公共分支：除了master之外全部固定成br_{a}_from_{b}
+	个人分支：pbr_{c}_from_{b}
+
+	a：业务名例如xx_service中的xx
+	b：父级分支（目的是一目了然父分支是谁，要经常从父分支pull代码到当前分支才能避免代码冲突）
+	c：工号 
+	
+	新特性开发从gamma分支上拉取特性分支,如br_xxservice_from_gamma，开发完成后再合入。
+	个人需要开发独立功能的从特性分支br_xxservice_from_gamma上获取个人分支，开发完成后合入。
+	
+	上线前需要把br_xxservice_from_gamma分支合入br_gamma_from_master测试通过再上线。

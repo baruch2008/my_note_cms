@@ -40,7 +40,7 @@ dbconfig.yml
 注意事项
     1.不支持分片的表与不分片的表JOIN
     2.不支持分片表的DISTINCAT
-    3.通过sharding-jdbc操作的表都要在dbconfig.yml-sharding.config.sharding.tables
+    3.通过sharding-jdbc操作的不分片的表也要在dbconfig.yml-sharding.config.sharding.tables中配置actual-data-nodes，否则会报参数null指针异常
     
 DATAROUTER
 ├─multidatabase 数据库路由

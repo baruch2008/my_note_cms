@@ -6,3 +6,18 @@ SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Date date=new Date(Long.parseLong("1473297360000"));  
     time=format.format(date);  
     System.out.println(time);  
+
+动态拼接String
+    String chargeFlowUrl = _AGENT_URL+"?agentAccount="+_AGENT_ACCOUNT+"&sequence=%s &phone=%s &iceUrl=%s &range=%d &size=%d &_timestamp=%s";
+    String url = String.format(chargeFlowUrl, sequence, phone , noticeUrl , range, size,URLEncoder.encode(timestamp, "utf-8"));
+
+字符串中提取数字
+
+字符串中截取两个子字符串之前的内容（使用场景：截取html与）
+    String soap = "abc3443abcfgjhgabcgfjabc";
+    String rgex = "abc(.*?)abc";
+    Pattern pattern = Pattern.compile(rgex);
+    Matcher m = pattern.matcher(soap);
+    while (m.find()) {
+        String result = m.group(i); // 获取结果
+    }

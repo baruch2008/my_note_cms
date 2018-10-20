@@ -1,44 +1,43 @@
-FeignClient中不加url属性，默认调用同一个注册中心的服务
-
-@FeignClient Method has too many Body parameters
-异常原因：当使用FeignClient调用三方接口时，如果发送的是get请求，那么需要在请求参数前加上@RequestParam注解修饰，Controller里面可以不加该注解修饰。
-
-### 配置FeignClient注解
-@Configuration
-public class FeignClientConfiguration
-{
-    @Value("${allinoneauthtoken.key}")
-    private String tokenKey;
-
-    @Value("${allinoneauthtoken.value}")
-    private String tokenValue;
-
-    @Bean
-    public RequestInterceptor headerInterceptor()
-    {
-        return new RequestInterceptor()
+服务间通讯注解@FeignClient
+    易错
+        FeignClient中不加url属性，默认调用同一个注册中心的服务
+        使用FeignClient调用三方get型接口，要在请求参数前加上@RequestParam注解修饰，否则报错Method has too many Body parameters，Controller里面可以不加该注解修饰。
+    设置token信息
+        配置FeignClient注解
+        @Configuration
+        public class FeignClientConfiguration
         {
-            @Override
-            public void apply(RequestTemplate requestTemplate)
+            @Value("${token.key}")
+            private String tokenKey;
+
+            @Value("${token.value}")
+            private String tokenValue;
+
+            @Bean
+            public RequestInterceptor headerInterceptor()
             {
-                List<String> authorizationList = Lists.newArrayList(tokenValue);
-                List<String> contentTypeList = Lists.newArrayList("application/json");
-                Map<String, Collection<String>> headers = ImmutableMap.of(tokenKey, authorizationList,
-                        "Content-Type", contentTypeList);
-                requestTemplate.headers(headers);
+                return new RequestInterceptor()
+                {
+                    @Override
+                    public void apply(RequestTemplate requestTemplate)
+                    {
+                        List<String> authorizationList = Lists.newArrayList(tokenValue);
+                        List<String> contentTypeList = Lists.newArrayList("application/json");
+                        Map<String, Collection<String>> headers = ImmutableMap.of(tokenKey, authorizationList,
+                                "Content-Type", contentTypeList);
+                        requestTemplate.headers(headers);
+                    }
+                };
             }
-        };
-    }
-}
-@FeignClient(name = "xx-service", url = "${xx.xx.xx}", configuration = FeignClientConfiguration.class)
+        }
+        读取配置
+        @FeignClient(name = "xx-service", url = "${xx.xx.xx}", configuration = FeignClientConfiguration.class)
 
-### 接收cookie中的参数
-@CookieValue(value="xx")
+接口接收cookie中的参数
+    @CookieValue(value="xx")
 
-### 扫描包注解
-@ComponentScan(basePackages = { "com.huawei.allinone.testmanagement", "com.huawei.tdt.common.config",
-        "com.huawei.allinone.common
-"})
+扫描包注解
+    @ComponentScan(basePackages = { "com.xx.xx.xx.service"..})
 
 ### eureka注册中心
 eureka:

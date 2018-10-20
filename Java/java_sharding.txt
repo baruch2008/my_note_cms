@@ -1,5 +1,9 @@
-分库分表三方包
-sharding
+分库分表插件sharding依赖
+<dependency>
+    <groupId>io.shardingsphere</groupId>
+    <artifactId>sharding-jdbc</artifactId>
+    <version>3.0.0.M1</version>
+</dependency>
 
 DATAROUTER
 ├─multidatabase 数据库路由

@@ -101,3 +101,12 @@ eclipse debug启动springboot问题
     没有下断点，但以debug方式启动后都会在SilentExitExceptionHandler类中的throw new SilentExitException()处断开 
     解决办法
         window->preferences->java->debug 取消勾选 suspend execution on uncaught exceptions
+
+使用热部署插件
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>provided</scope>
+      <!--optional我没弄明白，都说必须为true，但我测试true，false，不加都可以-->
+      <optional>true</optional>
+    </dependency>

@@ -24,3 +24,5 @@ Spring4.3 http方法注解
 #### 服务启动后1s后启动，9999...s后再次运行
   @Scheduled(initialDelay = 1000, fixedDelay = 999999999)
 达到多线程效果，需要将多个定时任务启动时间短暂的错开即可
+定时注解必须要加固定延迟，否则报错
+Caused by: java.lang.IllegalStateException: Encountered invalid @Scheduled method 'testMq': Exactly one of the 'cron', 'fixedDelay(String)', or 'fixedRate(String)' attributes is required

@@ -33,4 +33,19 @@ http访问
 				URL url1 = new URL(url); 
 				URI uri = new URI(url1.getProtocol(), url1.getAuthority(), url1.getPath(), url1.getQuery(), null);
 
+跳出多层循环（循环标签名的命名方法是：java命名规则 和 半角冒号   比如： lableA: ）
+	lableB:  
+	for(int i=0;i<3;i++){  
+		lableA:  
+		for(int j=0;j<3;j++){  
+			System.out.println(j);  
+			if(j==1){  
+				break lableB;  
+			}  
+		}  
+	} 
+	
+jar包出现了冲突
+	java.lang.reflect.InvocationTargetException
 
+SimDateFormat不支持 yyyy-MM-DD（装换出的日期月份默认为1月），只支持yyyy-MM-dd

@@ -1,0 +1,46 @@
+SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+时间字符串转化为 long字符串
+    Date date = format.parse("2016-09-08 09:15:12");
+    System.out.println(date.getTime());  //将时间转化为毫秒数例如: 1473297300000
+将long字符串转化为时间格式化
+    Date date=new Date(Long.parseLong("1473297360000"));  
+    time=format.format(date);  
+    System.out.println(time);  
+
+动态拼接String
+    String chargeFlowUrl = _AGENT_URL+"?agentAccount="+_AGENT_ACCOUNT+"&sequence=%s &phone=%s &iceUrl=%s &range=%d &size=%d &_timestamp=%s";
+    String url = String.format(chargeFlowUrl, sequence, phone , noticeUrl , range, size,URLEncoder.encode(timestamp, "utf-8"));
+
+字符串中提取数字
+
+字符串中截取两个子字符串之间的内容（使用场景：截取html与）
+    String soap = "abc3443abcfgjhgabcgfjabc";
+    String rgex = "abc(.*?)abc";
+    Pattern pattern = Pattern.compile(rgex);
+    Matcher m = pattern.matcher(soap);
+    while (m.find()) {
+        String result = m.group(i); // 获取结果
+    }
+
+判断字符串是否为数字
+    public static boolean isInteger(String str) {  
+        // 方法1
+        Pattern pattern = Pattern.compile("[0-9]*");
+        // 方法2
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");    
+        return pattern.matcher(str).matches();    
+      } 
+      
+拼接字符串（StringBuffer类似）
+    StringBuilder sb = new StringBuilder();
+    long ts = System.currentTimeMillis();
+    for (int i = 0; i < 100000; i++) {
+        sb.append(String.valueOf(i));
+    }
+    sb.toString();
+
+字符串分割-split()方法
+    1.字符"|","*","+"都得加上转义字符，前面加上"\\"。
+    2.而如果是"\"，那么就得写成"\\\\"。
+    3.如果一个字符串中有多个分隔符，可以用"|"作为连字符。比如：String str = "Java string-split#test",可以用Str.split(" |-|#")把每个字符串分开。这样就把字符串分成了3个子字符串。
+    4.还有一些情况，比如replaceAll方法中，想将()括号去掉也是需要加上转义字符的，因为这些字符跟正则表达式中的符号冲突，所以在非正则的使用方式中，需要用“\\”来进行转义。

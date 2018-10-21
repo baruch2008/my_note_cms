@@ -1,6 +1,78 @@
-分库分表三方包
-sharding
+pom.xml
+    <dependency>
+        <groupId>io.shardingsphere</groupId>
+        <artifactId>sharding-jdbc</artifactId>
+        <version>3.0.0.M1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-dbcp2</artifactId>
+        <version>2.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+    </dependency>
 
+dbconfig.yml
+    spring:
+      datasource:
+        type: org.apache.commons.dbcp2.BasicDataSource
+    sharding:
+      jdbc:
+        datasource:
+          names: db_test // 可以添加多个数据源
+          code_center:
+            type: org.apache.commons.dbcp.BasicDataSource
+            driver: com.mysql.jdbc.Driver
+            url: jdbc:mysql://ip:3306/db_test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+            username: root
+            password: 123456
+        config:
+          sharding:
+            tables:
+              table_test: // 需要分部署读取的表名，去除分片数字标识
+                actual-data-nodes: db_test.table_test_$->{0..9} // 设置实际数字节点名称
+                table-strategy: // 分片策略
+                  inline:
+                    sharding-column: sharding_id // 分片来源行
+                    algorithm-expression: table_test_$->{sharding_id % 10} // 分片算法设置，以sharding_id除以10的余数为片标识
+注意事项
+    1.不支持分片的表与不分片的表JOIN
+    2.不支持分片表的DISTINCAT
+    
+error
+    解决连接池实例冲突
+        file [D:\..\*Mapper.class] required a single bean, but 2 were found:
+            - dataSource: defined by method 'dataSource' in class path resource [io/shardingsphere/jdbc/spring/boot/SpringBootConfiguration.class]
+            - xxDataSource: defined by method 'xxDataSource' in class path resource [../DataSourceConfig.class]
+        原因
+            shardingsphere的连接池默认名称为dataSource，结果自定义连接池名字也叫dataSource，产生冲突
+        解决方案
+            去掉@ComponentScan(basePackages = {...})中冲突连接池引用
+    表分片后字段类型不同导致的sharding框架报错
+        Caused by: io.shardingsphere.core.exception.ShardingException:  
+        Cannot get uniformed table structure for t_code_mergerequestinfo. The different column metadata of actual tables is as follows 
+    sharding-mybatis查询不分片表报参数异常
+        Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+        ### Error updating database.  Cause: java.lang.NullPointerException
+        ### The error occurred while setting parameters
+        Caused by: java.lang.NullPointerException
+            at io.shardingsphere.core.jdbc.metadata.dialect.JDBCShardingRefreshHandler.execute(JDBCShardingRefreshHandler.java:49)
+            at io.shardingsphere.core.jdbc.core.statement.ShardingPreparedStatement.execute(ShardingPreparedStatement.java:159)
+            at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:46)
+        解决方法
+            通过sharding-jdbc操作的不分片的表也要在dbconfig.yml-sharding.config.sharding.tables中配置actual-data-nodes，否则会报参数null指针异常
+    添加ShardingMapperScanConfig.java未在dbconfig.yml中添加配置
+        nested exception is org.springframework.beans.factory.BeanCreationException: 
+        Error creating bean with name 'io.shardingsphere.jdbc.spring.boot.SpringBootConfiguration': Initialization of bean failed; nested exception is java.lang.NullPointerException
+        没有配置
+        sharding:
+          jdbc:
+            datasource:
+              names: code_center
+              ...
+            
 DATAROUTER
 ├─multidatabase 数据库路由
 │  │  DataSourceAspect.java

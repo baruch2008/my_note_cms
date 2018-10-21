@@ -26,6 +26,10 @@ aliyun ecs web服务器搭建
 				http://mirrors.hust.edu.cn/apache/maven/maven-3/3.5.4/binaries/
 				Files -> Binary tar.gz archive -> apache-maven-3.5.4-bin.tar.gz
 			配置本地仓库、远程仓库路径
+				默认本地仓库地址
+					/root/.m2/repository/
+				默认远程仓库url
+					https://repo.maven.apache.org/maven2/
 			修改系统变量
 				vim /etc/profile
 					export MAVEN_HOME=/usr/local/lib/apache-maven-3.5.4/

@@ -43,3 +43,12 @@ while (iterator.hasNext())
 }
 error:UnsupportedOperationException
 原因：moduleNames的类型是Arrays$ArrayList，而不是ArrayList
+
+list转数组
+    List list = new ArrayList();
+    list.add("1");
+    list.add("2");
+    final int size =  list.size();
+    String[] arr = (String[])list.toArray(new String[size]);
+数组转list
+    List stooges = Arrays.asList("Larry", "Moe", "Curly");

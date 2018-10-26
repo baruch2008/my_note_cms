@@ -27,6 +27,13 @@ LEFT JOIN (select * from leaves where mid=897) as c ON a.uid=c.uid
 where a.mid=897 and b.uid is null and c.uid is null
 注：where后的条件容易错写成 a.uid != b.uid
 
+判断是不是数字
+	SELECT '1.1' REGEXP '[0-9.]'
+		结果为1表示true 当然也可以使用SELECT '1.1' REGEXP '[^0-9.]'，结果为0表示false。 
+判断是不是包含字母
+	SELECT '1AA' REGEXP '[a-z]'
+		结果为1表示true，此情况不区分英文大小写，若区分大小写可使用SELECT '1AA' REGEXP BINARY '[a-z]'，结果为0表示false。
+
 error 
 	联合查询表之间排序规则不同 Illegal mix of collations for operation 'UNION'
 		原因

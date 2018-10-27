@@ -11,6 +11,11 @@ SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     String chargeFlowUrl = _AGENT_URL+"?agentAccount="+_AGENT_ACCOUNT+"&sequence=%s &phone=%s &iceUrl=%s &range=%d &size=%d &_timestamp=%s";
     String url = String.format(chargeFlowUrl, sequence, phone , noticeUrl , range, size,URLEncoder.encode(timestamp, "utf-8"));
 
+字符串大小写转换
+    String str = new String("abc DEF");//创建字符串str
+    String newstr = str.toLowerCase();//使用toLowerCase()方法实现小写转换
+    String newstr2 = str.toUpperCase();//使用toUpperCase()方法实现大写转换
+    
 字符串中提取数字
 
 字符串中截取两个子字符串之间的内容（使用场景：截取html与）

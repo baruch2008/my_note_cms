@@ -4,7 +4,7 @@ Collections.reverse()
 list.contains()
 # 并集
 list1.addAll(list2);
-# 交集
+# 交集（交集元素存于list1中）
 list1.retainAll(list2);
 # 差集
 list1.removeAll(list2);

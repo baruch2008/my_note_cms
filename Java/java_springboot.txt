@@ -56,6 +56,31 @@ eureka注册中心配置
 强制下线eureka注册中心注册的子服务
     curl -X PUT "http://admin:admin@192.168.101.100:8761/eureka/apps/{appName}/{instanceId}/status?value=OUT_OF_SERVICE"
 	说明：admin:admin是eureka的登录名和密码，如果没有，直接去掉前面这段。cURL是一个利用URL语法在命令行下工作的文件传输工具，-x 选项可以为CURL添加代理功能，PUT为指定其它协议
+1、查看服务实例
+GET http://100.99.97.145:8761/eureka/apps/ALLINONE-CODEACTIVITY-DATA-SERVICE
+<application>
+  <name>ALLINONE-CODEACTIVITY-DATA-SERVICE</name>
+  <instance>
+    <instanceId>100.99.97.145:9008</instanceId>
+    <hostName>100.99.97.145</hostName>
+    <app>ALLINONE-CODEACTIVITY-DATA-SERVICE</app>
+    <ipAddr>100.99.97.145</ipAddr>
+    <status>UP</status>
+    <overriddenstatus>UP</overriddenstatus>
+    <port enabled="true">9008</port>
+    <securePort enabled="false">443</securePort>
+  ...
+  </instance>
+</application>
+
+2、下线服务实例
+PUT http://100.99.97.145:8761/eureka/apps/ALLINONE-CODEACTIVITY-DATA-SERVICE/172.17.1.3:9008/status?value=OUT_OF_SERVICE
+
+3、上线服务实例
+PUT http://100.99.97.145:8761/eureka/apps/ALLINONE-CODEACTIVITY-DATA-SERVICE/172.17.1.3:9008/status?value=UP
+
+4、删除已不存在的服务实例
+DELETE http://100.99.97.145:8761/eureka/apps/ALLINONE-CODEACTIVITY-DATA-SERVICE/172.17.1.3:9008
 
 启动类中加入跨域过滤器解决跨域问题
     问题来源

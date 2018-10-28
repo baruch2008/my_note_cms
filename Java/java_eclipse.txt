@@ -6,3 +6,7 @@
 编辑设置
 	设置文件默认编辑器
 		Window -> Preferences -> General ->  Editors -> File Associations
+开发设置
+	maven插件自动下载源码包
+		Window -> Preferences -> Maven ->  勾选Download Artifact Sources
+	创建maven项目

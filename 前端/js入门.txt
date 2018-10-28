@@ -1,47 +1,75 @@
 js
-	函数（function） 
-		页面加载时不会立即执行，需要通过调用的时候来执行，用于封装操作过程
-		function sum(num1, num2) {
-			return num1 + num2; 
-		}
-		表现形式
-			声明式：function XXX(){}
-				function会函数提升，被JS解释器优先编译，声明与调用没有先后，可以在任何位置调用
-				加上()则是会被编译器忽略
-				function fn1(){}();
-			函数表达式：var k = function(){}
-				function不会函数提升，JS解释器逐行编译，声明必须要放在调用之前。
-				加上()可以直接调用
-				var fn2 = function(){}();
-		DOM加载完毕之后执行
-			$(function(){…});   
-			jQuery(function($) {…});  
-			$(document).ready(function(){…})
-	事件
-		触发函数的开关
-		<body>
-			<script>
-				function displayDate(){
-					document.getElementById("demo").innerHTML=Date();
-				}
-			</script>
-			<p>点击绑定了onclick事件的按钮就可以执行 displayDate()</p>
-			<button onclick="displayDate()">点击事件</button>
-			<p id="demo"></p>
-		</body>
-	页面内置方法
-		页面加载时立即执行，且只执行一次
-		alert("xx")
-	方法（method）
-		通过对象调用的js函数，当将函数封装在对象中，函数（function）就变成了对象的方法（method）
-	对象（object）
-		变量的键值对容器
-		对象里面可以封装函数，无法封装操作过程
-		var person = {
-			firstName:"zhang",
-			lastName:"erga",
-			fullName: function() {
-				return this.firstName + " " + this.lastName;
+	装载顺序
+		页面装载时执行的顺序就是其引入标记<script/>的出现顺序
+	ECMAScript(核心，描述了JS的语法和基本对象)
+		变量
+		数组
+		关键字
+			debugger // 设置断点
+		函数（function） 
+			页面加载时不会立即执行，需要通过调用的时候来执行，用于封装操作过程
+			function sum(num1, num2) {
+				return num1 + num2; 
 			}
-		}
-	
+			表现形式
+				声明式：function XXX(){}
+					function会函数提升，被JS解释器优先编译，声明与调用没有先后，可以在任何位置调用
+					加上()则是会被编译器忽略
+					function fn1(){}();
+				函数表达式：var k = function(){}
+					function不会函数提升，JS解释器逐行编译，声明必须要放在调用之前。
+					加上()可以直接调用
+					var fn2 = function(){}();
+			DOM加载完毕之后执行
+				$(function(){…});   
+				jQuery(function($) {…});  
+				$(document).ready(function(){…})
+			系统函数
+		事件
+			触发函数的开关
+			<body>
+				<script>
+					function displayDate(){
+						document.getElementById("demo").innerHTML=Date();
+					}
+				</script>
+				<p>点击绑定了onclick事件的按钮就可以执行 displayDate()</p>
+				<button onclick="displayDate()">点击事件</button>
+				<p id="demo"></p>
+			</body>
+		方法（method）
+			通过对象调用的js函数，当将函数封装在对象中，函数（function）就变成了对象的方法（method）
+			页面内置对象方法
+				页面加载时立即执行，且只执行一次
+				alert("xx")
+		对象（object，类）
+			变量的键值对容器
+			对象里面可以封装函数，无法封装操作过程
+			var person = {
+				firstName:"zhang",
+				lastName:"erga",
+				fullName: function() {
+					return this.firstName + " " + this.lastName;
+				}
+			}
+			js内置对象
+				Object、Array、Boolean、Date、Math、Number、String、Global
+	DOM（文档对象模型）：处理网页内容的方法和接口，对浏览器内的内容进行操作
+	BOM（浏览器对象模型）：与浏览器交互的方法和接口，用来获取或设置浏览器的属性、行为
+		window：预览器对象
+			document：页面对象
+	控制台调试
+		console.log('消息内容！'); //输出普通信息
+			console.group('分组1');
+		　　console.log('分组1-1111');
+		　　console.log('分组1-2222');
+		　　console.groupEnd();
+　　	console.info('消息内容！'); //输出提示信息，等同于console.log()
+		//console.debug() // 等同于console.log()，不支持Chrome、opera
+		console.dir() // 用于显示对象所有的属性和方法
+　　	console.error('消息内容！');//输出错误信息
+　　	console.warn('消息内容！'); //输出警告信息
+		快捷键
+			F9：运行到下一个行
+			F11：运行到下一个断点
+			F8：结束调试

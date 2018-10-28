@@ -6,11 +6,17 @@ js
 		数组
 		关键字
 			debugger // 设置断点
-		函数（function） 
+		函数（function，特点就是重复调用和延时加载） 
 			页面加载时不会立即执行，需要通过调用的时候来执行，用于封装操作过程
-			function sum(num1, num2) {
-				return num1 + num2; 
-			}
+				function sum(num1, num2) {
+					return num1 + num2; 
+				}
+			参数易错细节
+				function sum(a, b, c) {
+					return a + b + c;
+				}
+				console.debug(sum(1, 2)); // 结果为NaN
+				实参个数 < 形参个数，参数c默认为undefined = NaN，a+b == 3 ==》3+NaN ==》NaN
 			表现形式
 				声明式：function XXX(){}
 					function会函数提升，被JS解释器优先编译，声明与调用没有先后，可以在任何位置调用
@@ -24,7 +30,9 @@ js
 				$(function(){…});   
 				jQuery(function($) {…});  
 				$(document).ready(function(){…})
-			系统函数
+			系统函数（全局函数）
+				parseInt：解析一个字符串并返回一个浮点数
+				parseFloat：解析一个字符串并返回一个整数
 		事件
 			触发函数的开关
 			<body>
@@ -52,8 +60,19 @@ js
 					return this.firstName + " " + this.lastName;
 				}
 			}
-			js内置对象
-				Object、Array、Boolean、Date、Math、Number、String、Global
+			this：谁调用this，this就指向谁
+				function Person(name,age){
+					this.name = name;
+					this.age = age;
+				}
+			js内置对象（8个）
+				Object、Array、Boolean、Number、Global
+				Date
+					getDate()
+				Math
+					max(5,7)
+				String
+					split(",") // 与java相似
 	DOM（文档对象模型）：处理网页内容的方法和接口，对浏览器内的内容进行操作
 	BOM（浏览器对象模型）：与浏览器交互的方法和接口，用来获取或设置浏览器的属性、行为
 		window：预览器对象
@@ -71,5 +90,4 @@ js
 　　	console.warn('消息内容！'); //输出警告信息
 		快捷键
 			F9：运行到下一个行
-			F11：运行到下一个断点
-			F8：结束调试
+			F8：运行到下一个断点

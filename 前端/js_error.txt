@@ -1,0 +1,12 @@
+error
+	$ is not defined 
+	解决
+		把自定义的js代码放在引用jQuery文件后面 
+	ajax 403 Invalid CORS request
+	解决
+		在后台服务中添加跨域过滤器
+	ajax 请求 options类型，发送成功后，后续的GET请求没有发送
+	解决
+		添加response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
+	$(function () {})优先加载类选择器导致data赋值失败（未解之谜）
+		

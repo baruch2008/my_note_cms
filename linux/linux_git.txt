@@ -1,3 +1,8 @@
+linux环境 git 免密pull、push
+	git config --global user.name "Your Name"
+	git config --global user.email "email@.com"
+	git config --global credential.helper store
+	再pull或push时输入一次密码后以后都不用输入了
 ## Tortoise push免密码设置
 ### 设置用户信息
 TortoiseGit->setting->Git->'用户信息'填写用户名与邮箱

@@ -45,6 +45,10 @@ js
 				<button onclick="displayDate()">点击事件</button>
 				<p id="demo"></p>
 			</body>
+			放在$(function(){})中
+				$(function(){})中的代码会等到dom文档内容全部渲染完毕才执行。避免出现dom结构未完成，找不到元素的错误。
+			放在$(function(){})外
+				变量为全局变量，事件为边加载边运行，可能出现dom结构未完成，找不到元素的错误。
 		方法（method）
 			通过对象调用的js函数，当将函数封装在对象中，函数（function）就变成了对象的方法（method）
 			页面内置对象方法
@@ -91,3 +95,4 @@ js
 		快捷键
 			F9：运行到下一个行
 			F8：运行到下一个断点
+	.js 文件间互相引用

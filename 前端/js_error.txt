@@ -9,4 +9,6 @@ error
 	解决
 		添加response.setHeader("Access-Control-Allow-Headers", "x-requested-with,Content-Type");
 	$(function () {})优先加载类选择器导致data赋值失败（未解之谜）
-		
+	$('#btn').click() 放在$(function(){里面})才能被按钮调到
+		表示要等待页面加载完成后才绑定的事件，只有在页面加载的时候才会有效触发
+	通过后台写死state得到的文件夹状态的叶子节点，在刷新页面后展开第二次才会触发onExpand事件？并且触发调用接口后不会渲染出子节点

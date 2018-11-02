@@ -49,3 +49,12 @@ https://admin:password@github.com
 	个人需要开发独立功能的从特性分支br_xxservice_from_gamma上获取个人分支，开发完成后合入。
 	
 	上线前需要把br_xxservice_from_gamma分支合入br_gamma_from_master测试通过再上线。
+
+检出日志管理
+	git log -–before={2018-10-30} -–after={2010-10-01}
+	git log -–grep=!* Merge branch 该命令会列出所有包含hotfix字样的提交信息说明的提交记录
+	git log -–author=xx
+
+	git log branch --no-merges --author="xx" --after="2010-10-01" --after="2010-10-30" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -
+
+	git log --since=2018-09-01 --until=2018-10-30 --shortstat --pretty=tformat:--numstat --author=xx | gawk '{ if ($5 == "insertions(+),") add +=$4; if ($5 == "deletions(-)") del +=$4; del +=$6} END { printf "added lines: %s removed lines : %s\n ",add,del }'

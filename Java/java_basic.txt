@@ -49,3 +49,6 @@ jar包出现了冲突
 	java.lang.reflect.InvocationTargetException
 
 SimDateFormat不支持 yyyy-MM-DD（装换出的日期月份默认为1月），只支持yyyy-MM-dd
+
+将http get请求的参数中汉语、空格的unicode编码转为utf-8编码
+	URLDecoder.decode(urlParams, "utf-8");

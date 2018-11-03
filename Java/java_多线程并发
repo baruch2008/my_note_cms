@@ -30,3 +30,5 @@
 
 resources
   Java 四种线程池的用法分析：https://blog.csdn.net/u011974987/article/details/51027795
+  Java主线程等待子线程、线程池：https://blog.csdn.net/xiao__gui/article/details/9213413
+  Java多线程系列--“JUC锁”09之 CountDownLatch原理和示例：https://www.cnblogs.com/skywang12345/p/3533887.html

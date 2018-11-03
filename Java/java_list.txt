@@ -51,4 +51,5 @@ error
         }
         原因：moduleNames的类型是Arrays$ArrayList，而不是ArrayList
 
-
+resources
+    Java中ArrayList remove会遇到的坑：https://www.cnblogs.com/woshimrf/p/java-arryalist-remove.html

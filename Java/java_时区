@@ -7,6 +7,7 @@
       Locale China = Locale.CHINA;
     TimeZone：使DateFormat按照所在时区调整时间偏移度，从而得到符合配置的时区的时间
       TimeZone ChinaTimeZone = TimeZone.getTimeZone("Asia/Shanghai");
+      ChinaTimeZone.getDisplayName(China);
   日期格式化类
     DateFormat
       DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.FULL,China);

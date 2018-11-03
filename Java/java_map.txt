@@ -4,7 +4,7 @@ Map
       根据key的HashCode值来存储数据,根据key可以直接获取它的Value，具有很快的访问速度
       HashMap最多只允许一条记录的key值为Null(多条会覆盖)，允许多条记录的Value为 Null
       非线程同步
-    遍历HashMap（共5种，这里只列举常用的2种）
+    遍历HashMap获取key值与value值（共5种，这里只列举常用的2种）
       方法1
         for (Object o : tempMap.keySet()) {
          System.out.println("key=" + o + " value=" + tempMap.get(o));

@@ -24,7 +24,11 @@ Map
               return o1.getValue().compareTo(o2.getValue());
           }
       });
-        
+    将value转换为set
+      错误写法：Set<String> groupNames = (Set<String>) arg.values();
+      java.lang.ClassCastException: java.util.HashMap$Values cannot be cast to java.util.Set
+      正确写法：Set<String> groupNames = new TreeSet<>(arg.values());
+      
   TreeMap
     特性
       能够将保存记录根据key排序,默认升序排序，可以指定排序比较器，当用Iterator遍历TreeMap得到的记录是排过序的

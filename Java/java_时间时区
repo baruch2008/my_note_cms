@@ -28,3 +28,6 @@
   SET GLOBAL time_zone = '+8:00';
   SET time_zone = '+8:00';
   FLUSH PRIVILEGES;
+
+resources
+  一个月的第一天和最后一天：http://stevenjohn.iteye.com/blog/1062672

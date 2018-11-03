@@ -1,0 +1,14 @@
+Map<String, Integer> tempMap = new HashMap<String, Integer>();
+
+遍历map（共5种，这里只列举常用的2种）
+  方法1
+    for (Object o : tempMap.keySet()) {
+     System.out.println("key=" + o + " value=" + tempMap.get(o));
+    }
+  方法2
+    Iterator it = tempMap.entrySet().iterator();
+    while(it.hasNext()){
+      Map.Entry entry = (Map.Entry)it.next();
+      entry.getKey();
+      entry.getValue();
+    }

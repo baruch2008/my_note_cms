@@ -1,5 +1,16 @@
 xml解析
-	XStream 
-		fromXML方法解析xml中含有下划线的字段
-		XStream xs = new XStream(new DomDriver(null,new XmlFriendlyNameCoder("_-", "_")));
+  XStream 
+    将xml转换为java对象（先配置好java对象与xml标签的映射）
+    	// fromXML方法解析xml中标签属性名不含下划线的字段
+	XStream xs = new XStream(new DomDriver());
+	// fromXML方法解析xml中标签属性名含有下划线的字段
+	XStream xs = new XStream(new DomDriver(null,new XmlFriendlyNameCoder("_-", "_")));
+	xs.setClassLoader(Object.class.getClassLoader());
+	xs.ignoreUnknownElements();
+	xs.processAnnotations(Object.class);
+	Object object = (Object) xs.fromXML(xml);
+    java对象映射xml标签、xml标签属性注解（java中字段命名与xml中标签、标签属性保持一致）
+    	@XStreamAlias("xml标签名")
+	@XStreamImplicit(itemFieldName = "多子xml标签名")
+	@XStreamAsAttribute // xml标签属性注解
 

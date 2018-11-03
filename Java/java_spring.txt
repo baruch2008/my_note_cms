@@ -4,7 +4,7 @@ Spring4.3 http方法注解
 	@PostMapping、@PutMapping、@DeleteMapping、@PatchMapping
 	来帮助简化常用的HTTP方法的映射，并更好地表达被注解方法的语义。
   
-### 定时任务多线程配置
+定时任务多线程配置
   import java.util.concurrent.Executors;
   import org.springframework.context.annotation.Configuration;
   import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -18,11 +18,21 @@ Spring4.3 http方法注解
           taskRegistrar.setScheduler(Executors.newScheduledThreadPool(5));
       }
   }
-### 定时任务标识使用
-#### 定时启动
-  @Scheduled(cron = "0 21 22 * * ?")
-#### 服务启动后1s后启动，9999...s后再次运行
+定时任务标识使用
+	定时启动
+  		@Scheduled(cron = "0 21 22 * * ?")
+服务启动后1s后启动，9999...s后再次运行
   @Scheduled(initialDelay = 1000, fixedDelay = 999999999)
-达到多线程效果，需要将多个定时任务启动时间短暂的错开即可
-定时注解必须要加固定延迟，否则报错
-Caused by: java.lang.IllegalStateException: Encountered invalid @Scheduled method 'testMq': Exactly one of the 'cron', 'fixedDelay(String)', or 'fixedRate(String)' attributes is required
+	达到多线程效果，需要将多个定时任务启动时间短暂的错开即可
+	定时注解必须要加固定延迟，否则报错
+	Caused by: java.lang.IllegalStateException: Encountered invalid @Scheduled method 'testMq': Exactly one of the 'cron', 'fixedDelay(String)', or 'fixedRate(String)' attributes is required
+
+error
+	org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing
+		请求体xxxDTO为null时出现
+		@RequestMapping(value = "/somewhere", method = POST)
+		public SomeResponse someHandler(@RequestBody XXXDTO xxxDTO) { ... }
+		解决方法
+			@RequestBody （required=false）
+		
+		

@@ -16,6 +16,14 @@ Map
           entry.getKey();
           entry.getValue();
         }
+    按value排序（与TreeMap一样）
+      List<Map.Entry<String,String>> list = new ArrayList<Map.Entry<String,String>>(map.entrySet());
+      Collections.sort(list,new Comparator<Map.Entry<String,String>>() {
+          //升序排序
+          public int compare(Entry<String, String> o1,Entry<String, String> o2) {
+              return o1.getValue().compareTo(o2.getValue());
+          }
+      });
         
   TreeMap
     特性
@@ -23,7 +31,7 @@ Map
       不允许key的值为null
       非线程同步
     对TreeMap内容排序
-      按key降序
+      按key降序（Comparator）
         Map<String, String> map = new TreeMap<String, String>(
                 new Comparator<String>() {
                     public int compare(String obj1, String obj2) {
@@ -35,14 +43,28 @@ Map
         map.put("a", "aaaaa");
         map.put("b", "bbbbb");
         map.put("d", "ddddd");
-        
         Set<String> keySet = map.keySet();
         Iterator<String> iter = keySet.iterator();
         while (iter.hasNext()) {
             String key = iter.next();
             System.out.println(key + ":" + map.get(key));
         }
-    
+      按value降序（Collections.sort(List<T> list, Comparator<? super T> c)）
+        Map<String, String> map = new TreeMap<String, String>();
+        map.put("d", "ddddd");
+        map.put("b", "bbbbb");
+        map.put("a", "aaaaa");
+        map.put("c", "ccccc");
+        //这里将map.entrySet()转换成list
+        List<Map.Entry<String,String>> list = new ArrayList<Map.Entry<String,String>>(map.entrySet());
+        //然后通过比较器来实现排序
+        Collections.sort(list,new Comparator<Map.Entry<String,String>>() {
+            //升序排序
+            public int compare(Entry<String, String> o1,Entry<String, String> o2) {
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+        
   Hashtable
     key和value的值均不允许为null，支持线程同步，任一时刻只有一个线程能写Hashtable，导致写入性能较差
     

@@ -1,0 +1,5 @@
+xml解析
+	XStream 
+		fromXML方法解析xml中含有下划线的字段
+		XStream xs = new XStream(new DomDriver(null,new XmlFriendlyNameCoder("_-", "_")));
+

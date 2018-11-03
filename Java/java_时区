@@ -3,5 +3,12 @@
 
 时区相关类
   时区配置类
-    Local：使DateFormat按所配置的地区特性来输出文字
+    Locale：使DateFormat按所配置的地区特性来输出文字
+      Locale China = Locale.CHINA;
     TimeZone：使DateFormat按照所在时区调整时间偏移度，从而得到符合配置的时区的时间
+      TimeZone ChinaTimeZone = TimeZone.getTimeZone("Asia/Shanghai");
+  日期格式化类
+    DateFormat
+      DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.FULL,China);
+      DateFormat.setTimeZone(ChinaTimeZone);
+      DateFormat.format(date);

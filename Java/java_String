@@ -3,7 +3,7 @@ double转String（保留4位小数）
         String d2 = String.format("%.4d", d1);
 
 String数组转换成为List
-	List<String> stooges = Arrays.asList(String[]);
+    List<String> stooges = Arrays.asList(String[]);
         
 SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 时间字符串转化为 long字符串

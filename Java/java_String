@@ -1,3 +1,10 @@
+double转String（保留4位小数）
+    double d1 = 123.0123456;
+        String d2 = String.format("%.4d", d1);
+
+String数组转换成为List
+    List<String> stooges = Arrays.asList(String[]);
+        
 SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 时间字符串转化为 long字符串
     Date date = format.parse("2016-09-08 09:15:12");

@@ -1,0 +1,18 @@
+java对象转换为json字符串
+	JSONArray.fromObject(Object).toString();
+	JSONObject.fromObject(Object).toString();
+
+json字符串转换为java对象
+	List<Object> l = JSONArray.parse(jsonStr, Object.class);
+	Object o = JSONObject.parse(jsonStr, Object.class);
+  
+error
+  HTTP Status 500 - Could not write content: Object is null
+  Could not write content: Object is null (through reference chain: 
+  net.sf.json.JSONObject["rows"]->
+  net.sf.json.JSONArray[5]->
+  net.sf.json.JSONObject["cell"]->
+  net.sf.json.JSONArray[4]->
+  net.sf.json.JSONNull["empty"]);
+  原因
+    jsonObject对象中含有为null的对象

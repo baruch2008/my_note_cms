@@ -1,0 +1,27 @@
+xml解析
+  XStream 
+    xml -> java对象（先配置好java对象与xml标签的映射）
+    	// fromXML方法解析xml中标签属性名不含下划线的字段
+	XStream xs = new XStream(new DomDriver());
+	// fromXML方法解析xml中标签属性名含有下划线的字段
+	XStream xs = new XStream(new DomDriver(null,new XmlFriendlyNameCoder("_-", "_")));
+	xs.setClassLoader(Object.class.getClassLoader());
+	xs.ignoreUnknownElements();
+	xs.processAnnotations(Object.class);
+	Object object = (Object) xs.fromXML(xml);
+    java对象映射xml
+    	注解法
+            映射xml标签、xml标签属性注解（java中字段命名与xml中标签、标签属性保持一致）
+    	    @XStreamAlias("xml标签名")
+	    @XStreamImplicit(itemFieldName = "多子xml标签名") // 用于list元素的映射
+	    @XStreamAsAttribute // xml标签属性注解
+	设置法
+	    xs.alias("object", object.class);
+	    xs.useAttributeFor(Person.class,"username"); // 将子元素写到XML元素的里面作为属性
+	    xs.aliasAttribute(Person.class, "username","name"); 
+	    -> <person><username>chiwei</username><age>26</age></person> -> <person name="chiwei"><age>26</age></person>
+    java对象 -> xml
+	xs.toXML(obj);
+
+resources
+    https://blog.csdn.net/simonchi/article/details/38926817

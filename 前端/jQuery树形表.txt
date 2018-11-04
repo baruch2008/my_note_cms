@@ -1,3 +1,19 @@
-jQuery树形表
-	引入jQuery包
-	jquery ajax方法
+jQuery treegrid树形表
+	属性
+		继承datagrid
+		继承tree
+			state
+				closed
+					使任何一级节点都显示文件夹
+					事件-加载数据成功后展开全部节点，会触发每一个节点的事件-展开onExpand，造成资源浪费
+						onLoadSuccess: function () {
+							$("#testTreeGrid").treegrid(state);
+						}
+				open/undefined
+					为叶子节点就会显示文件
+		自有
+		重复追加
+	parentNode.treegrid('append', {
+                            parent: pId,//父节点id
+                            data: data.data
+                        });

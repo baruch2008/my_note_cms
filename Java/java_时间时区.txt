@@ -1,0 +1,33 @@
+计算机内部记录时间（格林威治标准时(GMT)）
+  Date date = new Date(); // 代表一个时间点，其值为距公元1970年1月1日 00:00:00的毫秒数。
+
+时区相关类
+  时区配置类
+    Locale：使DateFormat按所配置的地区特性来输出文字
+      Locale China = Locale.CHINA;
+    TimeZone：使DateFormat按照所在时区调整时间偏移度，从而得到符合配置的时区的时间
+      TimeZone ChinaTimeZone = TimeZone.getTimeZone("Asia/Shanghai");
+      ChinaTimeZone.getDisplayName(China);
+  日期格式化类
+    DateFormat
+      DateFormat.getDateTimeInstance(DateFormat.FULL,DateFormat.FULL,China);
+      DateFormat.setTimeZone(ChinaTimeZone);
+      DateFormat.format(date);
+
+服务与数据库时区对其
+  jdbc:mysql://localhost:3306/mytest?useTimezone=true&serverTimezone=UTC
+    useTimezone：是否在客户端和服务器时区间转换时间／日期类型，为true使用的是服务器时区，为false使用的是本地时区
+    serverTimezone：覆盖时区的检测/映射，当服务器的时区为映射到Java时区时使用。
+      设置MYSQL服务器所在的时区是UTC时间（比CST[北京时间]少8小时），如果JAVA代码运行环境是CST时区，存到数据库里就会减去8小时，
+      如果JAVA代码运行环境是UTC时间，那么保存到数据库里面的时间不会变。
+    
+查看MYSQL所在时区：
+  SHOW VARIABLES LIKE "%time_zone%";
+
+修改MYSQL所在时区：
+  SET GLOBAL time_zone = '+8:00';
+  SET time_zone = '+8:00';
+  FLUSH PRIVILEGES;
+
+resources
+  一个月的第一天和最后一天：http://stevenjohn.iteye.com/blog/1062672

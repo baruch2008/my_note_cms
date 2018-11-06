@@ -1,5 +1,6 @@
 jQuery treegrid树形表
 	属性
+		自有
 		继承datagrid
 		继承tree
 			state
@@ -11,9 +12,12 @@ jQuery treegrid树形表
 						}
 				open/undefined
 					为叶子节点就会显示文件
+	方法
 		自有
-		重复追加
-	parentNode.treegrid('append', {
-                            parent: pId,//父节点id
-                            data: data.data
-                        });
+			组合方法：定位指定行
+			treeGrid.treegrid('select', node.id);
+			var row = treeGrid.treegrid('getSelected');
+		继承datagrid
+		继承tree
+	bug
+		当前节点没有子节点并且状态为展开的情况下，添加节点时当前文件夹变成文件（偶现）

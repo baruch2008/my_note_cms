@@ -1,78 +1,92 @@
 Map
-  HashMap（最常用的Map）
-    特性
-      根据key的HashCode值来存储数据,根据key可以直接获取它的Value，具有很快的访问速度
-      HashMap最多只允许一条记录的key值为Null(多条会覆盖)，允许多条记录的Value为 Null
-      非线程同步
-    遍历HashMap获取key值与value值（共5种，这里只列举常用的2种）
-      方法1
-        for (Object o : tempMap.keySet()) {
-         System.out.println("key=" + o + " value=" + tempMap.get(o));
-        }
-      方法2
-        Iterator it = tempMap.entrySet().iterator();
-        while(it.hasNext()){
-          Map.Entry entry = (Map.Entry)it.next();
-          entry.getKey();
-          entry.getValue();
-        }
-    按value排序（与TreeMap一样）
-      List<Map.Entry<String,String>> list = new ArrayList<Map.Entry<String,String>>(map.entrySet());
-      Collections.sort(list,new Comparator<Map.Entry<String,String>>() {
-          //升序排序
-          public int compare(Entry<String, String> o1,Entry<String, String> o2) {
-              return o1.getValue().compareTo(o2.getValue());
-          }
-      });
-    将value转换为set
-      错误写法：Set<String> groupNames = (Set<String>) arg.values();
-      java.lang.ClassCastException: java.util.HashMap$Values cannot be cast to java.util.Set
-      正确写法：Set<String> groupNames = new TreeSet<>(arg.values());
+	HashMap（最常用的Map）
+		特性
+		  根据key的HashCode值来存储数据,根据key可以直接获取它的Value，具有很快的访问速度
+		  HashMap最多只允许一条记录的key值为Null(多条会覆盖)，允许多条记录的Value为 Null
+		  非线程同步
+		遍历HashMap获取key值与value值（共5种，这里只列举常用的2种）
+		  方法1
+			for (Object o : tempMap.keySet()) {
+			 System.out.println("key=" + o + " value=" + tempMap.get(o));
+			}
+		  方法2
+			Iterator it = tempMap.entrySet().iterator();
+			while(it.hasNext()){
+			  Map.Entry entry = (Map.Entry)it.next();
+			  entry.getKey();
+			  entry.getValue();
+			}
+		按value排序（与TreeMap一样）
+		  List<Map.Entry<String,String>> list = new ArrayList<Map.Entry<String,String>>(map.entrySet());
+		  Collections.sort(list,new Comparator<Map.Entry<String,String>>() {
+			  //升序排序
+			  public int compare(Entry<String, String> o1,Entry<String, String> o2) {
+				  return o1.getValue().compareTo(o2.getValue());
+			  }
+		  });
+		将value转换为set
+		  错误写法：Set<String> groupNames = (Set<String>) arg.values();
+		  java.lang.ClassCastException: java.util.HashMap$Values cannot be cast to java.util.Set
+		  正确写法：Set<String> groupNames = new TreeSet<>(arg.values());
       
-  TreeMap
-    特性
-      能够将保存记录根据key排序,默认升序排序，可以指定排序比较器，当用Iterator遍历TreeMap得到的记录是排过序的
-      不允许key的值为null
-      非线程同步
-    对TreeMap内容排序
-      按key降序（Comparator）
-        Map<String, String> map = new TreeMap<String, String>(
-                new Comparator<String>() {
-                    public int compare(String obj1, String obj2) {
-                        // 降序排序
-                        return obj2.compareTo(obj1);
-                    }
-                });
-        map.put("c", "ccccc");
-        map.put("a", "aaaaa");
-        map.put("b", "bbbbb");
-        map.put("d", "ddddd");
-        Set<String> keySet = map.keySet();
-        Iterator<String> iter = keySet.iterator();
-        while (iter.hasNext()) {
-            String key = iter.next();
-            System.out.println(key + ":" + map.get(key));
-        }
-      按value降序（Collections.sort(List<T> list, Comparator<? super T> c)）
-        Map<String, String> map = new TreeMap<String, String>();
-        map.put("d", "ddddd");
-        map.put("b", "bbbbb");
-        map.put("a", "aaaaa");
-        map.put("c", "ccccc");
-        //这里将map.entrySet()转换成list
-        List<Map.Entry<String,String>> list = new ArrayList<Map.Entry<String,String>>(map.entrySet());
-        //然后通过比较器来实现排序
-        Collections.sort(list,new Comparator<Map.Entry<String,String>>() {
-            //升序排序
-            public int compare(Entry<String, String> o1,Entry<String, String> o2) {
-                return o1.getValue().compareTo(o2.getValue());
-            }
-        });
-        
-  Hashtable
-    key和value的值均不允许为null，支持线程同步，任一时刻只有一个线程能写Hashtable，导致写入性能较差
-    
-  LinkedHashMap
-    保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的.在遍历的时候会比HashMap慢。key和value均允许为空，非线程同步
+	TreeMap
+		特性
+		  能够将保存记录根据key排序,默认升序排序，可以指定排序比较器，当用Iterator遍历TreeMap得到的记录是排过序的
+		  不允许key的值为null
+		  非线程同步
+		对TreeMap内容排序
+		  按key降序（Comparator）
+			Map<String, String> map = new TreeMap<String, String>(
+					new Comparator<String>() {
+						public int compare(String obj1, String obj2) {
+							// 降序排序
+							return obj2.compareTo(obj1);
+						}
+					});
+			map.put("c", "ccccc");
+			map.put("a", "aaaaa");
+			map.put("b", "bbbbb");
+			map.put("d", "ddddd");
+			Set<String> keySet = map.keySet();
+			Iterator<String> iter = keySet.iterator();
+			while (iter.hasNext()) {
+				String key = iter.next();
+				System.out.println(key + ":" + map.get(key));
+			}
+		  按value降序（Collections.sort(List<T> list, Comparator<? super T> c)）
+			Map<String, String> map = new TreeMap<String, String>();
+			map.put("d", "ddddd");
+			map.put("b", "bbbbb");
+			map.put("a", "aaaaa");
+			map.put("c", "ccccc");
+			//这里将map.entrySet()转换成list
+			List<Map.Entry<String,String>> list = new ArrayList<Map.Entry<String,String>>(map.entrySet());
+			//然后通过比较器来实现排序
+			Collections.sort(list,new Comparator<Map.Entry<String,String>>() {
+				//升序排序
+				public int compare(Entry<String, String> o1,Entry<String, String> o2) {
+					return o1.getValue().compareTo(o2.getValue());
+				}
+			});
+			
+	Hashtable
+		key和value的值均不允许为null，支持线程同步，任一时刻只有一个线程能写Hashtable，导致写入性能较差
+		
+	LinkedHashMap
+		保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的.在遍历的时候会比HashMap慢。key和value均允许为空，非线程同步
+
+	SortedMap
+		提供排序、获取集合特定位置元素等方法
+		常用方法
+			java.util.SortedMap.comparator()//接收比较器，用于Map排序
+			java.util.SortedMap.entrySet() //获取Map中的entrySet集合
+			java.util.SortedMap.keySet() //获取key的set集合
+			java.util.SortedMap.values() //集合所有的values
+			java.util.SortedMap.firstKey() //第一个key
+			java.util.SortedMap.lastKey() //最后的key
+			java.util.SortedMap.headMap(K k) //在k之前的键值对，不包含k
+			java.util.SortedMap.tailMap(K k) //在k之后的键值对，包含k
+			java.util.SortedMap.subMap(K k1, K k2) //k1，k2之间的键值对，包含k1，不包含k2
+
 
 

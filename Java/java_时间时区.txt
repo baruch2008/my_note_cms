@@ -1,3 +1,8 @@
+给特定时间点加一段时间
+  SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  Date date =df.parse("2017-09-18 23:59:58");
+  date.setTime(date.getTime() + 1000);
+  
 计算机内部记录时间（格林威治标准时(GMT)）
   Date date = new Date(); // 代表一个时间点，其值为距公元1970年1月1日 00:00:00的毫秒数。
 

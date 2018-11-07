@@ -38,6 +38,9 @@ where a.mid=897 and b.uid is null and c.uid is null
 	update table1  set field1 = field2;
 不同表一列复制到另一个列
 	update table1,table2 set table1.field1=table2.field2 where table1.id=table2.id
+	
+group by后的结果将每组某VARCHAR字段字符串连接起来
+	select goods_id ,concat (",",GROUP_CONCAT(optiona_id),",") from `lux_product_goods_property_val` group by goods_id
 
 error 
 	联合查询表之间排序规则不同 Illegal mix of collations for operation 'UNION'

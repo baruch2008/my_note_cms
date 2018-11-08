@@ -42,6 +42,11 @@ where a.mid=897 and b.uid is null and c.uid is null
 group by后的结果将每组某VARCHAR字段字符串连接起来
 	select goods_id ,concat (",",GROUP_CONCAT(optiona_id),",") from `lux_product_goods_property_val` group by goods_id
 
+将 articles 表全量插入到 newArticles 表中（2张表的字段一致）
+	INSERT INTO newArticles SELECT * FROM articles;
+插入指定字段（注意字段的顺序必须一致）
+	INSERT INTO 目标表 (字段1, 字段2, ...) SELECT 字段1, 字段2, ... FROM 来源表;
+
 error 
 	联合查询表之间排序规则不同 Illegal mix of collations for operation 'UNION'
 		原因

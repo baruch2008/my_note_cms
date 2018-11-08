@@ -1,0 +1,33 @@
+模拟登录
+  CloseableHttpClient httpClient = null;
+  HttpPost httpPost = null;
+  CookieStore cookieStore = new BasicCookieStore();
+  httpClient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+
+  httpPost = new HttpPost(url + "/login");
+
+  List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+
+  formparams.add(new BasicNameValuePair("username", "pITpubAI"));
+  formparams.add(new BasicNameValuePair("password", "GGN8-E@6"));
+  UrlEncodedFormEntity entity = null;
+  try
+  {
+      entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+  }
+  catch (UnsupportedEncodingException e)
+  {
+      e.printStackTrace();
+  }
+  httpPost.setEntity(entity);
+
+  RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(300000).setConnectTimeout(300000)
+          .build();
+  httpPost.setConfig(requestConfig);
+  httpClient.execute(httpPost);
+  List<Cookie> cookies = cookieStore.getCookies();
+  for (Cookie cookie : cookies)
+  {
+      return cookie.getName() + "=" + cookie.getValue();
+  }
+            

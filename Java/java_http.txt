@@ -1,3 +1,19 @@
+将http get请求的参数中汉语、空格的unicode编码转为utf-8编码
+	URLDecoder.decode(urlParams, "utf-8");
+	
+http访问
+	Spring RestTemplate:
+		比httpClient更优雅的Restful URL访问
+	URI uri = new URI(url)
+		报错 java.net.URISyntaxException: Illegal character in scheme name at index 0:
+		原因
+			地址中涉及了特殊字符，如‘｜’‘&’等，不能直接用String代替URI来访问。
+		解决方法
+			用'%0xXX'来替代特殊字符。
+			把String类型的地址转成URL实例，再用URL生成URI。（URL.getPath()）
+				URL url1 = new URL(url); 
+				URI uri = new URI(url1.getProtocol(), url1.getAuthority(), url1.getPath(), url1.getQuery(), null);
+				
 模拟登录
   CloseableHttpClient httpClient = null;
   HttpPost httpPost = null;

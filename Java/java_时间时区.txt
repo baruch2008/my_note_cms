@@ -1,3 +1,5 @@
+SimDateFormat不支持 yyyy-MM-DD（装换出的日期月份默认为1月），只支持yyyy-MM-dd
+
 给特定时间点加一段时间
   SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
   Date date =df.parse("2017-09-18 23:59:58");

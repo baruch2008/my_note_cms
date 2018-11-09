@@ -1,4 +1,4 @@
-jQuery treegrid树形表
+treegrid树形表
 	属性
 		自有
 		继承datagrid

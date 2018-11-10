@@ -1,0 +1,107 @@
+58同城爬虫
+功能：
+# 方法1：获取产品分类列表
+# 方法2：获取单个分类的产品列表
+# 方法3：获取单个产品的详细信息
+技术栈：python2.7
+数据库：mongodb
+主要使用 requests 模块下载页面，部分使用 BeautifulSoup对页面内容解析，采用pymongo对mongodb数据库进行访问
+requests
+requests.get(start_url)à
+return request('get', url, params=params, **kwargs)à
+return session.request(method=method, url=url, **kwargs)à
+return self.send(prep, **send_kwargs)à
+hooks = hooks or dict()
+hooks = hooks.get(key)
+return dispatch_hook('response', hooks, r, **kwargs)
+（hooks:python事件响应钩子 event hooks）
+ demo源码（https://blog.csdn.net/miaomiao0313/article/details/71215295）
+# -*-coding:utf-8-*-
+from bs4 import BeautifulSoup
+import requests
+import time
+import pymongo
+# start_url = 'http://bj.58.com/sale.shtml'
+# url_host = 'http://bj.58.com'
+start_url = 'http://cd.58.com/sale.shtml'
+url_host = 'http://cd.58.com'
+client = pymongo.MongoClient()
+ceshi = client['ceshi']
+url_list = ceshi['url_list3']
+item_info = ceshi['item_info3']
+
+# 方法1：获取产品分类列表
+def get_channel_urls(url):
+    # 下载start_url的页面信息
+    # wb_data <class 'requests.models.Response'>
+    wb_data = requests.get(start_url)
+    print(type(wb_data))
+    # 获取start_url页面内容解析器
+    # soup <class 'bs4.BeautifulSoup'>
+    soup = BeautifulSoup(wb_data.text, 'html.parser')
+    print(type(soup))
+    # 解析页面，过滤页面内容
+    # links <type 'list'>
+    # select  .ym-submnu为类名查找 ul.ym-submnu > li > b > a为组合查找-->子标签查找
+    links = soup.select('ul.ym-submnu > li > b > a')
+    # html页面代码
+    # <ul class ="ym-submnu" style="width: 800px;">
+    #     <li>
+    #         <b>
+    #             <a href = "/shouji/" > 手机 </a>
+    #         </b>
+    #     </li>
+    # </ul>
+    print(type(links))
+    for link in links:
+        # 拼接分类连接
+        page_url = url_host + link.get('href')
+        # print page_url
+
+# 方法2：获取单个分类的产品列表
+def get_links_from(channel, pages, who_sells=0):
+    # print 'hello {0}'.format('world')-->hello world
+    # 拼接产品列表地址
+    list_view = '{}{}/pn{}'.format(channel, str(who_sells), str(pages))
+    # 获取产品列表
+    wb_data = requests.get(list_view)
+    # 为什么要sleep
+    time.sleep(1)
+    # 获取解析器
+    soup = BeautifulSoup(wb_data.text, 'html.parser')
+    if soup.find('td', 't'):
+        for link in soup.select('td.t a.t'):
+            item_link = link.get('href').split('?')[0]
+            url_list.insert_one({'url': item_link})
+            # 获取单个产品详情页连接
+            print item_link
+    else:
+        pass
+
+# 方法3：获取单个产品的详细信息
+def get_item_info(url):
+    wb_data = requests.get(url)
+    soup = BeautifulSoup(wb_data.text, 'html.parser')
+    # 页面响应状态判断
+    # find:传递任何标签的名字来查找到它第一次出现的地方。找到后，find函数返回一个BeautifulSoup的标签对象。
+    # 一般使用的目的是为了找到BeautifulSoup对象第一个标签入口
+    no_longer_exist = '404' in soup.find('script', type="text/javascript").get('src').split('/')
+    if no_longer_exist:
+        pass
+    else:
+        title = soup.title.text
+        price = soup.select('span.price.c_f50')[0].text
+        date = soup.select('.time')[0].text
+        area = list(soup.select('.c_25d a')[0].stripped_strings) if soup.find_all('span', 'c_25d') else None
+        item_info.insert_one({'title': title, 'price': price, 'date': date, 'area': area})
+        print({'title': title, 'price': price, 'date': date, 'area': area})
+
+# get_item_info('http://bj.58.com/shuma/28049255291945x.shtml')
+# get_item_info('http://bj.58.com/shuma/33897863726763x.shtml')
+# get_links_from('http://bj.58.com/shuma/',2)
+# get_item_info('http://cd.58.com/huishou/32866412604109x.shtml')
+# get_links_from('http://cd.58.com/shuma/',2)
+
+if __name__ == '__main__':
+    # get_channel_urls(start_url)
+    get_item_info('http://bj.58.com/shuma/28049255291945x.shtml')

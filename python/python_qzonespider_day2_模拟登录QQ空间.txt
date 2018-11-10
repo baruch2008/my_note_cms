@@ -1,0 +1,33 @@
+chrome预览器（版本 66.0.3359.181（正式版本） （32 位）
+chromedriver.exe（[镜像仓库](http://npm.taobao.org/mirrors/chromedriver/) 版本2.38）
+python2.7
+pycharm2017
+
+# coding=utf-8
+from selenium import webdriver
+
+def Start_Login():
+    # 这个是chormedriver的地址
+    driver = webdriver.Chrome(executable_path='K:\\python-workspace\\QQSpider-master\\QQSpider1\\chromedriver.exe')
+    driver.get('https://qzone.qq.com/')
+
+    driver.switch_to.frame('login_frame')
+    driver.find_element_by_id('switcher_plogin').click()
+
+    driver.find_element_by_id('u').clear()
+    driver.find_element_by_id('u').send_keys('qqnum')  #这里填写你的QQ号
+    driver.find_element_by_id('p').clear()
+    driver.find_element_by_id('p').send_keys('qqpwd')  #这里填写你的QQ密码
+
+    driver.find_element_by_id('login_button').click()
+    driver.find_element_by_id('dialog_button_1').click()
+
+# 这个函数用来解决腾讯g_tk加密算法的函数
+def get_g_tk(cookie):
+    hashes = 5381
+    for letter in cookie['p_skey']:
+        hashes += (hashes << 5) + ord(letter)  # ord()是用来返回字符的ascii码
+    return hashes & 0x7fffffff
+
+if __name__ == '__main__':
+    Start_Login()

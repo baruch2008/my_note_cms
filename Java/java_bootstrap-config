@@ -1,0 +1,8 @@
+
+bootstrap-dev.yml
+spring:
+  cloud:
+    config:
+      profile: dev
+      uri: http://localhost:8030/ # 配置服务的ip
+      label: br_gamma_from_master # 配置的分支

@@ -54,9 +54,9 @@ cxyp-config-dev.yml
       preferIpAddress: true
       instance-id: ${spring.cloud.client.ipAddress}:${server.port}
 db-config-dev.yml
-spring:
-    datasource:
-      type: org.apache.commons.dbcp2.BasicDataSource
+  spring:
+      datasource:
+        type: org.apache.commons.dbcp2.BasicDataSource
 
   cxyp:
     dbcp:
@@ -66,4 +66,11 @@ spring:
       username: root
       password: root
       
+route-config-dev.yml
+  zuul:
+    routes:
+      itqualitymonthlyreport:
+        path: /analysis/**
+        serviceId: cxyp-analysis-service
+        
 http://<ip>:8030//application/default/master//config.yml

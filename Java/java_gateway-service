@@ -41,3 +41,10 @@ application.yml
   ribbon:
     ReadTimeout: 30000
     ConnectTimeout: 30000
+
+启动类注解
+  @SpringBootApplication
+  @EnableCircuitBreaker
+  @EnableZuulProxy
+  @EnableAsync
+  @EnableFeignClients

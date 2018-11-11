@@ -48,3 +48,12 @@ application.yml
   @EnableZuulProxy
   @EnableAsync
   @EnableFeignClients
+
+过滤器（父类 ZuulFilter）
+  AccessAuthenticateFilter.java
+    AccessAuthorizeFilter.java
+    AccessCommonFilter.java
+    AccessLogFilter.java
+    AccessResponseFilter.java
+    AccessTokenFilter.java
+    UrlRedirectFilter.java

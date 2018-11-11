@@ -7,15 +7,16 @@
 	
 按照指定配置运行jar包
 	java -Xms4G -Xmx8G -jar /usr/local/x-service-0.1-SNAPSHOT.jar --spring.profiles.active=pro > /usr/local/x/x/log/x-service.log
+远程debug springboot项目
+	mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8080"
 	java -Xdebug -Xrunjdwp:transport=dt_socket,address=8080,server=y,suspend=y -jar cxyp-analysis-service.jar &
 		连接到myhost:8080提供的调试服务
-		-Xdebug是通知JVM工作在DEBUG模式下，
+		-Xdebug是通知JVM工作在DEBUG模式下
 		-Xrunjdwp是通知JVM使用(Java debug wire protocol)来运行调试环境。该参数同时了一系列的调试选项：
 		transport            指定了调试数据的传送方式
 		dt_socket            是指用SOCKET模式
 		server=y/n            VM 是否需要作为调试服务器执行。
 		suspend=y/n           是否在调试客户端建立连接之后启动 VM 。
-	mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8080"
 
 查看Linux系统信息
 	cat /proc/version // 查看Linux内核版本

@@ -1,0 +1,40 @@
+jvm
+	参数类型
+		标准参数（各版本保持稳定）
+			-help
+			-server 
+			-client
+			-version 
+			-showversion
+			-cp 
+			-classpath
+		X参数（非标准参数）
+			-Xint：解释执行（解释执行Class字节码，省去编译时间，加快启动速度，但执行效率较低）
+			-Xcomp：第一次使用编译成本地代码（提高执行效率，但占用程序运行时间、内存等资源）
+			-Xmixed：混合模式，JVM自行决定是否编译为本地代码（jvm默认使用该模式运行）
+		XX参数（非标准化参数，使用频率最高）
+			Boolean类型 -XX:[+ -]<name> 表示启用或者禁用name属性
+				-XX:+UseConcMarkSweepGC 使用ConcMarkSweep垃圾回收器
+				-XX:+UseG1GC 使用G1垃圾回收器
+			key-value类型 -XX:<name>=<value>表示name属性的值是value
+				-XX:MaxGCPauseMillis=500 GC最大停顿时间500ms
+				-XX:GCTimeRatio=19
+				-Xmx -> -XX:MaxHeapSize 设置jvm最大堆空间
+				-Xms -> -XX:InitialHeapSize 设置jvm初始化堆空间
+				-XSS -> -XX:ThreadStackSize 设置jvm栈空间
+	查看参数值 
+		ps -ef | grep tomcat // 获取tomcat的PID
+		jinfo -flag MaxHeapSize <PID>
+		jinfo -flag ThreadStackSize 1950
+			-XX:ThreadStackSize=1024 // 默认为1024KB，调优重点
+	优化工具
+		jstat
+			jvm统计信息查看
+				垃圾回收
+				类加载
+				jre代码编译
+			死循环与死锁
+		jmap + MAT
+			内存溢出
+	
+		

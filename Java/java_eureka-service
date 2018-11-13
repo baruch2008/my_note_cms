@@ -1,0 +1,28 @@
+application.yml
+  spring:
+    application:
+      name: cxyp-eureka-service
+
+  server:
+    port: 8761
+
+  eureka:
+    client:
+      register-with-eureka: false
+      fetch-registry: false
+      serviceUrl:
+        defaultZone: http://localhost:${server.port}/eureka/
+    server:
+      # 测试时关闭自我保护机制，保证不可用服务及时踢出
+      enable-self-preservation: false
+      # 清理时间间隔
+      eviction-interval-timer-in-ms: 4000
+
+启动类注解
+  @SpringBootApplication
+  @EnableEurekaServer
+pom.xml
+  <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+        </dependency>

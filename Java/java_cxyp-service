@@ -1,0 +1,27 @@
+application.yml
+  spring:
+    application:
+      name: allinone-testmanagement-service
+    http:
+      multipart:
+        maxFileSize: 10Mb
+        maxRequestSize: 10Mb
+
+  server:
+    port: 9005
+
+  ribbon:
+    ReadTimeout: 30000
+    ConnectTimeout: 30000
+
+本地运行的时候默认使用dev配置
+bootstrap.yml
+  spring:
+    cloud:
+      config:
+        name: cxyp-config,route-config,db-config,amqp-config,cache-config,lock-config
+    profiles:
+      active: dev
+
+线上运行的时候设置使用pro配置
+java -jar app.jar --spring.profiles.active=pro

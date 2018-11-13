@@ -1,5 +1,4 @@
-tree E:\abc >E:\1.xls /f // 生成目录树结构 
-tree /f > list.txt
+tree E:\abc > E:\1.txt /f // 生成目录树结构到指定文件夹
 Dir E:\abc /s /a >E:\  // 生成文件详细列表
 
 ::pause

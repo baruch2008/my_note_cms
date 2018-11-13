@@ -1,0 +1,76 @@
+application.yml
+  spring:
+    application:
+      name: allinone-config-service
+    cloud:
+      config:
+        server:
+          git:
+            uri: http://xx.git
+            search-paths: /config,/config/db,/config/route,/config/mq,/config/business/xx,/config/cache,/config/lock
+            username: xx
+            password: 123
+  #        native:
+  #          searchLocations: D:/cxyp-config/config,D:/cxyp-config/config/db
+  #  profiles:
+  #    active: native  #native表示从本地资源中查找配置
+
+  server:
+    port: 8030
+    
+pom.xml
+   <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+        
+启动类注解
+  @SpringBootApplication
+  @EnableConfigServer
+
+cxyp-config-dev.yml
+  spring:
+    redis:
+      host: <ip>
+      password: 
+      port: 6379
+      timeout: 2000
+      pool:
+        max-active: -1
+        max-wait: -1
+        max-idle: 8
+        min-idle: 2
+    session:
+      store-type: none
+    rabbitmq:
+      host: localhost
+      port: 5672
+
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+    instance:
+      preferIpAddress: true
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+db-config-dev.yml
+  spring:
+      datasource:
+        type: org.apache.commons.dbcp2.BasicDataSource
+
+  cxyp:
+    dbcp:
+      driverClassName: com.mysql.jdbc.Driver
+      dbName: cxyp
+      url: jdbc:mysql://<ip>:3306/${cxyp.dbcp.dbName}?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
+      username: root
+      password: root
+      
+route-config-dev.yml
+  zuul:
+    routes:
+      itqualitymonthlyreport:
+        path: /analysis/**
+        serviceId: cxyp-analysis-service
+        
+http://<ip>:8030//application/default/master//config.yml

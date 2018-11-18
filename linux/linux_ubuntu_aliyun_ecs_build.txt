@@ -68,6 +68,9 @@ aliyun ecs web服务器搭建
 				mysql>update mysql.user set authentication_string=password('root') where user='root'; 
 			修改配置文件
 				$ sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+					解决mysqld.cnf只读不能修改
+						sudo chmod 777 mysqld.cnf
+						sudo chmod 644 mysqld.cnf // 将权限修改回来，否则配置文件并不会生效
 				注释掉bind-address = 127.0.0.1 // 解除绑定地址
 				重启mysql：service mysql restart & /etc/init.d/mysql restart
 			授权操作

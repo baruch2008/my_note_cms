@@ -1,0 +1,50 @@
+基本环境配置
+	主库宿主机：阿里云ecs 47.100.15.0 mysql 5.7.23
+	从库宿主机：亚马逊AWS EC2 18.222.97.111 mysql 5.7.24
+	保证主从宿主机能相互ping通
+		问题：云服务器ping不通
+			亚马逊AWS EC2
+				安全组 -> 入站规则 -> 添加"所有的流量"的规则
+			阿里云ecs
+				安全组 -> 入站规则 -> 添加"全部ICMP"的规则
+主库 mysql 设置
+	mysqld.cnf（添加完配置后重启mysql）
+		log-bin=mysql-bin
+		server-id=1
+		binlog-ignore-db=cxyp // 无需同步的数据库binlog
+		binlog-ignore-db=information_schema
+		binlog-ignore-db=mysql
+		binlog-ignore-db=performance_schema
+		binlog-ignore-db=sys
+		binlog-do-db=test // 需要同步的数据库binlog
+	设置要赋予读取日志、复制的权限的从库宿主机信息
+		>GRANT FILE ON *.* TO 'root'@'18.222.97.111' IDENTIFIED BY 'mysql password';
+		>GRANT REPLICATION SLAVE ON *.* TO 'root'@'18.222.97.111' IDENTIFIED BY 'mysql password';
+		>FLUSH PRIVILEGES;
+	查看主库信息
+		mysql> show master status;
+从库 mysql 设置
+	mysqld.cnf（添加完配置后重启mysql）
+		log-bin=mysql-bin
+		server-id=2
+		binlog-ignore-db=cxyp
+		binlog-ignore-db=information_schema
+		binlog-ignore-db=mysql
+		binlog-ignore-db=performance_schema
+		binlog-ignore-db=sys
+		replicate-do-db=test // 需要同步的数据库
+		replicate-ignore-db=mysql
+		log-slave-updates
+		slave-skip-errors=all
+		slave-net-timeout=60
+	指定主库宿主机、数据库日志文件信息
+		mysql> stop slave;
+		mysql> change master to master_host='47.100.15.0',master_user='root',master_password='root',master_log_file='mysql-bin.000001', master_log_pos=883;
+		mysql> start slave;
+	查看从库信息
+		mysql> show slave status \G;
+测试主从同步的效果
+	在主库添加、修改表与表数据，从库也进行了同样的操作
+	
+resources
+	MySQL5.6 数据库主从（Master/Slave）同步安装与配置详解 https://blog.csdn.net/xlgen157387/article/details/51331244

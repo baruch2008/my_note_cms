@@ -1,0 +1,54 @@
+aws_vps+ss综合应用
+aws_vps+ss（推荐）
+1.1申请aws的vps（优先级降序）
+http://blog.sina.com.cn/s/blog_67de9c540102uxk3.html
+1.2 vps部署ss服务器（优先级降序）
+  https://teddysun.com/486.html（四合一脚本，解决ss运行问题）
+  http://blog.csdn.net/zizi7/article/details/78350721（关键：含AWS控制台设置入站规则方法）
+  http://blog.csdn.net/u011054333/article/details/52496303（含配置shadowsocks服务端详细配置方法）
+http://www.vpsdaquan.cn/%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B%E5%85%AD%EF%BC%9A%E5%8D%81%E5%88%86%E9%92%9F%E6%90%AD%E5%BB%BAshadowsocks%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8.html（网站版shadowsocks安装法）
+
+http://blog.51cto.com/xiaocainiaox/1851972（安装pip版shadowsocks安装）
+
+ 1.3本地安装ss客户端
+
+ 1.4本地预览器设置代理
+
+ 1.5Google BBR加速
+
+  http://wxhp.org/three-steps-to-build-vpn.html
+
+ 1.6常见问题
+
+  1.6.1Firefox显示您的链接不安全
+
+   https://jingyan.baidu.com/article/642c9d340552f9644b46f746.html
+
+二、aws_vps+ssh
+
+ 2.1 windows配置ssh客户端
+
+  http://www.qishansun.com/?p=12
+
+三、手机ss客户端安装
+
+ 
+
+四、拓展
+
+4.1ShadowSocks（简称ss、影梭）与SSH使用区别
+
+    使用SSH来创建本地socks5代理的方法容易被发现，因为SSH的端口基本是固定的, 某些地区干脆进行了封锁，而Shadowsocks的代理方式更为隐蔽和安全, 而且随机端口.
+   ShadowSocks无需保持实时连接，不用考虑断线问题。在使用SSH时，总会发生断开连接的情况，如网络不稳定、电脑休眠、切换wifi等，此时SSH连接将断 开，浏览网页什么的会提示无法连接到代理服务器。虽然客户端大都支持断线重连，但是反应经常不太灵敏，平均需要30秒左右的时间（而且这个时间是从你点开 网页开始算的）。如果你用的是手机的话，鉴于手机网络的多变性，人一旦动起来就几乎不可用了。
+
+   ShadowSocks有更丰富的客户端支持。提供几乎全平台支持，包括linux和非越狱iPhone在内。所有客户端都集成自动代理模式（PAC）非常稳定，能自动区分国内和国外的流量来判断是否要走代理, 这样不会影响上国内网站的速度。同时，各个平台上的客户端使用都十分简单，基本上就是填写一下地址 端口密码什么的，就能开始使用了.
+
+ShadowSocks与SSH速度区别,比如分别看同一部youbue电影进行测速, shadowsocks比ssh快5%左右, 可能是shadowsocks协议更优吧.
+
+ 4.2 Proxy、SSH 和VPN 的区别
+
+  http://blog.csdn.net/map_lixiupeng/article/details/41695045
+
+ 4.3 SSH隧道fq的原理和实现
+
+  http://www.pchou.info/linux/2015/11/01/ssh-tunnel.html

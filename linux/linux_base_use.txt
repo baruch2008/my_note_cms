@@ -1,3 +1,13 @@
+查看Linux系统信息
+	cat -n /etc/pas // 查看Linux账户信息
+	cat /proc/version // 查看Linux内核版本
+	lsb_release -a // 查看Linux系统版本
+	df -h // 查看磁盘剩余空间
+	du -sh *
+	free -m // 查看剩余内存
+	du -bs /Directory // 查看目录大小
+	find . -size +100M // 查看大文件
+	sudo passwd <账户名> // 修改账户密码
 后台运行jar包
 	java -jar xxx.jar &  
 	nohup java -jar xxxx.jar & 
@@ -17,15 +27,6 @@
 		dt_socket            是指用SOCKET模式
 		server=y/n            VM 是否需要作为调试服务器执行。
 		suspend=y/n           是否在调试客户端建立连接之后启动 VM 。
-
-查看Linux系统信息
-	cat /proc/version // 查看Linux内核版本
-	lsb_release -a // 查看Linux系统版本
-	df -h // 查看磁盘剩余空间
-	du -sh *
-	free -m // 查看剩余内存
-	du -bs /Directory // 查看目录大小
-	find . -size +100M // 查看大文件
 
 大文件分割成很多个小文件
 	split

@@ -36,5 +36,25 @@ jvm
 			死循环与死锁
 		jmap + MAT
 			内存溢出
+	jvm内存结构（jdk1.8）
+		运行时数据区（规范）
+			程序计数器PC Register
+				每个线程都会有
+				运行的java代码，PC Register存放正在执行的指令地址
+			虚拟机栈JVM Stacks
+				每个线程都会有
+				每个方法创建一个栈帧
+			堆Heap
+				所有线程共享
+				存放对象实例
+			方法区
+				所有线程共享
+	GC调优
+		垃圾回收算法
+		垃圾回收器
+		GC日志工具（young gc）
+		Tomcat GC调优实战
+		
+		
 	
 		

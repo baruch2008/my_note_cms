@@ -1,3 +1,8 @@
+设置docker运行资源
+	-m 或 --memory：设置内存的使用限额，例如 100M, 2G。
+	--memory-swap：设置 内存+swap 的使用限额。
+	docker run -m 200M --memory-swap=300M ubuntu
+
 ### 安装与修改docker配置
 DockerFile
   FROM xx.com/official/tomcat:7-jre8
